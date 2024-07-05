@@ -14,8 +14,8 @@ import { siteConfig } from "@/config/site";
 export const Navbar = () => {
   return (
     <NextUINavbar maxWidth="full" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
+      <NavbarContent justify="start">
+        <ul className="flex gap-4 justify-start mx-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink

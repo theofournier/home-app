@@ -1,7 +1,17 @@
+import NextImage from "next/image";
+
 export default function Home() {
   return (
-    <section className="flex flex-col items-center justify-center">
-      <h1>THEO FOURNIER</h1>
+    <section className="relative h-full">
+      <NextImage
+        fill
+        alt="NextUI hero Image"
+        sizes="100vw"
+        src="/home-img.webp"
+        style={{
+          objectFit: "cover",
+        }}
+      />
     </section>
   );
 }
