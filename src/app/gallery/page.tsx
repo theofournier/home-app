@@ -1,12 +1,25 @@
-export default function GalleryPage() {
+import NextImage from "next/image";
+
+import { getPhotos } from "@/lib/supabase/queries/getPhotos";
+
+export default async function GalleryPage() {
+  const photos = await getPhotos();
+
   return (
     <div>
-      <h1>GALLERY</h1>
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {[...Array(20)].map((_, i) => (
-            <div key={i} className="bg-gray-300 p-4">
-              <img src="/home-img.webp" alt=" 1" className="w-full h-auto" />
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {photos.map((photo) => (
+            <div key={photo.id} className="relative w-full h-96">
+              <NextImage
+                fill
+                alt={photo.title ?? photo.id}
+                sizes="100vw"
+                src={photo.url}
+                style={{
+                  objectFit: "cover",
+                }}
+              />
             </div>
           ))}
         </div>
