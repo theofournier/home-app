@@ -27,41 +27,44 @@ export const Gallery = ({ photos }: Props) => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         {photos.map((photo) => (
           <Card
             key={photo.id}
-            className="relative w-full h-96"
+            className="h-96"
             radius="none"
             isPressable
             onPress={() => onPressPhoto(photo)}
           >
             <NextImage
-              fill
               alt={photo.title ?? photo.id}
-              sizes="100vw"
               src={photo.url}
-              style={{
-                objectFit: "cover",
-              }}
+              height={photo.height}
+              width={photo.width}
             />
           </Card>
         ))}
       </div>
-      <Modal isOpen={isOpen} backdrop="blur" onOpenChange={onOpenChange}>
+      <Modal
+        isOpen={isOpen}
+        backdrop="blur"
+        onOpenChange={onOpenChange}
+        placement="center"
+        size="5xl"
+      >
         <ModalContent>
           {() => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Modal Title
+                {selectedPhoto?.title}
               </ModalHeader>
               <ModalBody>
                 {selectedPhoto ? (
                   <NextImage
                     alt={selectedPhoto.title ?? selectedPhoto.id}
                     src={selectedPhoto.url}
-                    height={500}
-                    width={500}
+                    height={selectedPhoto.height}
+                    width={selectedPhoto.width}
                   />
                 ) : (
                   <p>No selected photo</p>

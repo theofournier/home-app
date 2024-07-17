@@ -7,7 +7,7 @@ export default function Home() {
         fill
         alt="NextUI hero Image"
         sizes="100vw"
-        src="/home-img.webp"
+        src="/home-img.jpg"
         style={{
           objectFit: "cover",
         }}
