@@ -9,11 +9,6 @@
 		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
 	},
 	"dependencies": {
-		"@nextui-org/button": "2.0.34",
-		"@nextui-org/card": "2.0.31",
-		"@nextui-org/image": "2.0.29",
-		"@nextui-org/link": "2.0.32",
-		"@nextui-org/modal": "2.0.36",
 		"@nextui-org/navbar": "2.0.33",
 		"@nextui-org/switch": "2.0.31",
 		"@nextui-org/system": "2.2.2",

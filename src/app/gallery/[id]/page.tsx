@@ -15,16 +15,11 @@ export default async function Photo({
   }
 
   return (
-    <section className="relative h-full">
-      <NextImage
-        fill
-        alt={photo.title ?? photo.id}
-        sizes="100vw"
-        src={photo.url}
-        style={{
-          objectFit: "cover",
-        }}
-      />
-    </section>
+    <NextImage
+      alt={photo.title ?? photo.id}
+      src={photo.url}
+      height={photo.height}
+      width={photo.width}
+    />
   );
 }
