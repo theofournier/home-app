@@ -18,16 +18,17 @@ export const PhotoItem = ({ photo }: Props) => {
         className="max-h-[600px]"
         style={{ objectFit: "cover" }}
       />
-      <div className="opacity-0 hover:opacity-100 duration-300 absolute inset-0 z-10 text-white flex flex-col justify-between">
-        <div className="bg-gradient-to-b  from-black/50 p-1">
+      <div className="opacity-0 hover:opacity-100 duration-300 absolute inset-0 z-10 text-white flex flex-col justify-between bg-black/40">
+        <div className="p-1 mx-auto">
           <h2 className="text-2xl font-semibold">{photo.title}</h2>
-          <h3 className="text-lg">{photo.location}</h3>
         </div>
-        {photo.tags && photo.tags.length > 0 ? (
-          <div className="bg-gradient-to-t  from-black/50 p-1">
-            <p>{photo.tags.map((tag) => tag.description).join(", ")}</p>
+        <div className="flex flex-row justify-between items-end p-1">
+          <p>{photo?.tags?.map((tag) => tag.description).join(", ")}</p>
+          <div className="flex flex-col items-end">
+            <h3 className="text-lg">{photo.location}</h3>
+            <p>{photo.date}</p>
           </div>
-        ) : null}
+        </div>
       </div>
     </NextLink>
   );

@@ -1,4 +1,9 @@
-import { Photo } from "./types";
+import { Photo, Tag } from "./types";
+
+export const tags: Tag[] = [
+  { value: "nature", description: "Nature" },
+  { value: "city", description: "City" },
+];
 
 export const photos: Photo[] = [
   {

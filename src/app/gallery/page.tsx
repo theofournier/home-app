@@ -1,22 +1,45 @@
 import { getPhotos } from "@/lib/supabase/queries/getPhotos";
-import { PhotoItem } from "./_components/PhotoItem";
+import { NextPageProps } from "@/lib/types";
+import { redirect } from "next/navigation";
+import { GallerySearchInput } from "./_components/GallerySearchInput";
+import { GallerySearchTags } from "./_components/GallerySearchTags";
+import { GalleryGrid } from "./_components/GalleryGrid";
 
-export default async function GalleryPage() {
-  const photos = await getPhotos();
+type Props = {
+  query?: string;
+  tags?: string;
+};
+
+export default async function GalleryPage({
+  searchParams,
+}: NextPageProps<Props>) {
+  const searchQuery = searchParams.query;
+  const searchTags = searchParams.tags?.split(",");
+
+  const photos = await getPhotos({
+    query: searchQuery,
+    tags: searchTags,
+  });
+
+  const onSearch = async (formData: FormData) => {
+    "use server";
+
+    const query = formData.get("query") ?? searchQuery;
+    const tags = formData.getAll("tags") ?? searchTags;
+
+    const params = Object.entries({ query, tags: tags.join(",") })
+      .filter(([key, value]) => Boolean(value) === true)
+      .map(([key, value]) => `${key}=${value}`)
+      .join("&");
+
+    redirect(`/gallery?${params}`);
+  };
 
   return (
     <div className="container mx-auto px-4">
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
-        {Array.from({ length: 3 }, (_, i) => i).map((i) => (
-          <div key={`grid-${i}`} className="grid gap-2">
-            {photos
-              .filter((_, index) => index % 3 === i)
-              .map((photo) => (
-                <PhotoItem key={photo.id} photo={photo} />
-              ))}
-          </div>
-        ))}
-      </div>
+      <GallerySearchInput onSearch={onSearch} searchQuery={searchQuery} />
+      <GallerySearchTags onSearch={onSearch} searchTags={searchTags} />
+      <GalleryGrid photos={photos} />
     </div>
   );
 }
