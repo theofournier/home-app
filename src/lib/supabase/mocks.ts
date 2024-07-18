@@ -4,6 +4,7 @@ export const photos: Photo[] = [
   {
     id: "PHOTO_1",
     url: "/home-img.jpg",
+    name: "home-img.jpg",
     height: 2075,
     width: 3130,
     title: "Photo 1",
@@ -12,11 +13,15 @@ export const photos: Photo[] = [
     exposure: "f/16, 1/1000, 400 ISO, 10m",
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
-    tags: [{ value: "nature", description: "Nature" }],
+    tags: [
+      { value: "nature", description: "Nature" },
+      { value: "city", description: "City" },
+    ],
   },
   {
     id: "PHOTO_2",
     url: "/home-img.jpg",
+    name: "home-img.jpg",
     height: 2075,
     width: 3130,
     title: "Photo 2",
@@ -30,6 +35,7 @@ export const photos: Photo[] = [
   {
     id: "PHOTO_3",
     url: "/home-img2.jpg",
+    name: "home-img2.jpg",
     height: 3130,
     width: 2075,
     title: "Photo 3",
@@ -43,6 +49,7 @@ export const photos: Photo[] = [
   {
     id: "PHOTO_4",
     url: "/home-img.jpg",
+    name: "home-img.jpg",
     height: 2075,
     width: 3130,
     title: "Photo 4",
@@ -56,6 +63,7 @@ export const photos: Photo[] = [
   {
     id: "PHOTO_5",
     url: "/home-img2.jpg",
+    name: "home-img2.jpg",
     height: 3130,
     width: 2075,
     title: "Photo 5",
@@ -64,11 +72,11 @@ export const photos: Photo[] = [
     exposure: "f/16, 1/1000, 400 ISO, 10m",
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
-    tags: [{ value: "nature", description: "Nature" }],
   },
   {
     id: "PHOTO_6",
     url: "/home-img.jpg",
+    name: "home-img.jpg",
     height: 2075,
     width: 3130,
     title: "Photo 6",
@@ -77,6 +85,5 @@ export const photos: Photo[] = [
     exposure: "f/16, 1/1000, 400 ISO, 10m",
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
-    tags: [{ value: "nature", description: "Nature" }],
   },
 ];
