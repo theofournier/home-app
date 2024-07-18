@@ -15,11 +15,16 @@ export default async function Photo({
   }
 
   return (
-    <NextImage
-      alt={photo.title ?? photo.id}
-      src={photo.url}
-      height={photo.height}
-      width={photo.width}
-    />
+    <div className="relative w-full h-full">
+      <NextImage
+        alt={photo.title ?? photo.id}
+        src={photo.url}
+        fill
+        style={{
+          objectFit: "contain",
+        }}
+        priority
+      />
+    </div>
   );
 }
