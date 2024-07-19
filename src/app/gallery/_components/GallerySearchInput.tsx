@@ -15,7 +15,7 @@ export const GallerySearchInput = ({ searchQuery, onSearch }: Props) => {
         name="query"
         placeholder="Search photos..."
         startContent={<IconSearch size="1rem" />}
-        rightSection={
+        endContent={
           <Button isIconOnly type="submit">
             <IconArrowRight size="1rem" />
           </Button>

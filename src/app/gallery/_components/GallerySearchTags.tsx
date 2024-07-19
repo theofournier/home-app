@@ -8,17 +8,9 @@ type Props = {
   onSearch: (formData: FormData) => void;
 };
 
-const SearchTag = ({
-  selected,
-  tag,
-  onSearch,
-}: {
-  selected: boolean;
-  tag: Tag;
-  onSearch: (formData: FormData) => void;
-}) => {
+const SearchTag = ({ selected, tag }: { selected: boolean; tag: Tag }) => {
   return (
-    <form action={onSearch}>
+    <div>
       <input
         name="tags"
         defaultValue={selected ? undefined : tag.value}
@@ -28,14 +20,14 @@ const SearchTag = ({
       />
       <Button
         radius="full"
-        variant={selected ? "full" : "bordered"}
+        variant={selected ? "solid" : "bordered"}
         size="sm"
         startContent={selected ? <IconCheck /> : undefined}
         type="submit"
       >
-        {tag.description ?? tag.description}
+        {tag.title ?? tag.title}
       </Button>
-    </form>
+    </div>
   );
 };
 
@@ -43,20 +35,22 @@ export const GallerySearchTags = async ({ searchTags, onSearch }: Props) => {
   const tags = await getTags();
 
   return (
-    <div className="flex flex-row">
-      {tags
-        .map((tag) => ({
-          ...tag,
-          selected: Boolean(
-            searchTags?.some((searchTag) => searchTag === tag.value)
-          ),
-        }))
-        .toSorted((a, b) =>
-          a.selected === b.selected ? 0 : a.selected ? -1 : 1
-        )
-        .map((tag) => (
-          <SearchTag onSearch={onSearch} tag={tag} selected={tag.selected} />
-        ))}
-    </div>
+    <form action={onSearch}>
+      <div className="flex flex-row">
+        {tags
+          .map((tag) => ({
+            ...tag,
+            selected: Boolean(
+              searchTags?.some((searchTag) => searchTag === tag.value)
+            ),
+          }))
+          .toSorted((a, b) =>
+            a.selected === b.selected ? 0 : a.selected ? -1 : 1
+          )
+          .map((tag) => (
+            <SearchTag key={tag.value} tag={tag} selected={tag.selected} />
+          ))}
+      </div>
+    </form>
   );
 };

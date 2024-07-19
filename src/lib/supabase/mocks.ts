@@ -1,8 +1,8 @@
 import { Photo, Tag } from "./types";
 
 export const tags: Tag[] = [
-  { value: "nature", description: "Nature" },
-  { value: "city", description: "City" },
+  { value: "nature", title: "Nature" },
+  { value: "city", title: "City" },
 ];
 
 export const photos: Photo[] = [
@@ -19,8 +19,8 @@ export const photos: Photo[] = [
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
     tags: [
-      { value: "nature", description: "Nature" },
-      { value: "city", description: "City" },
+      { value: "nature", title: "Nature" },
+      { value: "city", title: "City" },
     ],
   },
   {
@@ -35,7 +35,7 @@ export const photos: Photo[] = [
     exposure: "f/16, 1/1000, 400 ISO, 10m",
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
-    tags: [{ value: "nature", description: "Nature" }],
+    tags: [{ value: "nature", title: "Nature" }],
   },
   {
     id: "PHOTO_3",
@@ -49,7 +49,7 @@ export const photos: Photo[] = [
     exposure: "f/16, 1/1000, 400 ISO, 10m",
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
-    tags: [{ value: "nature", description: "Nature" }],
+    tags: [{ value: "nature", title: "Nature" }],
   },
   {
     id: "PHOTO_4",
@@ -63,7 +63,7 @@ export const photos: Photo[] = [
     exposure: "f/16, 1/1000, 400 ISO, 10m",
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
-    tags: [{ value: "nature", description: "Nature" }],
+    tags: [{ value: "nature", title: "Nature" }],
   },
   {
     id: "PHOTO_5",
@@ -86,6 +86,19 @@ export const photos: Photo[] = [
     width: 3130,
     title: "Photo 6",
     description: "My photo 6",
+    location: "New York",
+    exposure: "f/16, 1/1000, 400 ISO, 10m",
+    date: "2024-07-16T14:00:00.000",
+    createdAt: "2024-07-16T14:00:00.000",
+  },
+  {
+    id: "PHOTO_7",
+    url: "/home-img2.jpg",
+    name: "home-img2.jpg",
+    height: 2075,
+    width: 3130,
+    title: "Photo 7",
+    description: "My photo 7",
     location: "New York",
     exposure: "f/16, 1/1000, 400 ISO, 10m",
     date: "2024-07-16T14:00:00.000",

@@ -14,7 +14,7 @@ export const getPhotos = async ({
     .filter((photo) => (query ? photo.title === query : true))
     .filter((photo) =>
       tags && tags.length > 0
-        ? photo.tags?.some((tag) => tags?.includes(tag.description ?? ""))
+        ? photo.tags?.some((tag) => tags?.includes(tag.title ?? ""))
         : true
     );
 };

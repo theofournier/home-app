@@ -15,5 +15,6 @@ export interface Photo {
 
 export interface Tag {
   value: string;
+  title?: string;
   description?: string;
 }
