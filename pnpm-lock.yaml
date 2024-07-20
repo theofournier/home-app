@@ -35,9 +35,9 @@ importers:
       '@tabler/icons-react':
         specifier: 3.11.0
         version: 3.11.0(react@18.3.1)
-      '@vercel/postgres-kysely':
+      '@vercel/postgres':
         specifier: ^0.9.0
-        version: 0.9.0(kysely@0.27.4)
+        version: 0.9.0
       clsx:
         specifier: 2.1.1
         version: 2.1.1
@@ -47,9 +47,6 @@ importers:
       intl-messageformat:
         specifier: 10.5.14
         version: 10.5.14
-      kysely:
-        specifier: ^0.27.4
-        version: 0.27.4
       next:
         specifier: 14.2.5
         version: 14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -676,12 +673,6 @@ packages:
   '@typescript-eslint/visitor-keys@7.2.0':
     resolution: {integrity: sha512-c6EIQRHhcpl6+tO8EMR+kjkkV+ugUNXOmeASA1rlzkd8EPIriavpWoiEz1HR/VLhbVIdhqnV6E7JZm00cBDx2A==}
     engines: {node: ^16.0.0 || >=18.0.0}
-
-  '@vercel/postgres-kysely@0.9.0':
-    resolution: {integrity: sha512-qkylWtxzfsXLhVU6zhlfitOae2h15Eu1hi4u5oB+3it3zr4+1LKeelQmaM6JiT36tPUPZvY6uCKVe6CtJXUvxA==}
-    engines: {node: '>=14.6'}
-    peerDependencies:
-      kysely: ^0.24.2 || ^0.25.0 || ^0.26.0 || ^0.27.0
 
   '@vercel/postgres@0.9.0':
     resolution: {integrity: sha512-WiI2g3+ce2g1u1gP41MoDj2DsMuQQ+us7vHobysRixKECGaLHpfTI7DuVZmHU087ozRAGr3GocSyqmWLLo+fig==}
@@ -1523,10 +1514,6 @@ packages:
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
-
-  kysely@0.27.4:
-    resolution: {integrity: sha512-dyNKv2KRvYOQPLCAOCjjQuCk4YFd33BvGdf/o5bC7FiW+BB6snA81Zt+2wT9QDFzKqxKa5rrOmvlK/anehCcgA==}
-    engines: {node: '>=14.0.0'}
 
   language-subtag-registry@0.3.23:
     resolution: {integrity: sha512-0K65Lea881pHotoGEa5gDlMxt3pctLi2RplBb7Ezh4rRdLEOtgi7n4EwK9lamnUCkKBqaeKRVebTq6BAxSkpXQ==}
@@ -3012,11 +2999,6 @@ snapshots:
       '@typescript-eslint/types': 7.2.0
       eslint-visitor-keys: 3.4.3
 
-  '@vercel/postgres-kysely@0.9.0(kysely@0.27.4)':
-    dependencies:
-      '@vercel/postgres': 0.9.0
-      kysely: 0.27.4
-
   '@vercel/postgres@0.9.0':
     dependencies:
       '@neondatabase/serverless': 0.9.4
@@ -4080,8 +4062,6 @@ snapshots:
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
-
-  kysely@0.27.4: {}
 
   language-subtag-registry@0.3.23: {}
 

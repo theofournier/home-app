@@ -1,6 +1,13 @@
-import { photos } from "../mocks";
-import { Photo } from "../types";
+import { sql } from "@vercel/postgres";
+import { mapPhotoDB, Photo, PhotoDB } from "../types";
 
 export const getPhoto = async (id: string): Promise<Photo | undefined> => {
-  return photos.find((photo) => photo.id === id);
+  const { rows } =
+    await sql<PhotoDB>`SELECT * FROM photos WHERE id = ${id};`;
+
+  if (rows.length === 0) {
+    return undefined;
+  }
+
+  return mapPhotoDB(rows[0]);
 };

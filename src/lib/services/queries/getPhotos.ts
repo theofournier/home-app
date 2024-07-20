@@ -1,5 +1,5 @@
-import { photos } from "../mocks";
-import { Photo } from "../types";
+import { sql } from "@vercel/postgres";
+import { mapPhotoDB, Photo, PhotoDB } from "../types";
 
 type GetPhotosParams = {
   query?: string;
@@ -12,6 +12,10 @@ export const getPhotos = async ({
   tags,
   locations,
 }: GetPhotosParams): Promise<Photo[]> => {
+  const { rows } = await sql<PhotoDB>`SELECT * FROM photos;`;
+
+  const photos: Photo[] = rows.map(mapPhotoDB);
+
   return photos
     .filter((photo) => (query ? photo.title === query : true))
     .filter((photo) =>
