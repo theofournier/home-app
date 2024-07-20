@@ -7,10 +7,17 @@ export interface Photo {
   title?: string;
   description?: string;
   location?: string;
-  exposure?: string;
+  exifData?: ExifData;
   date?: string;
   tags?: Tag[];
   createdAt: string;
+}
+
+export interface ExifData {
+  exposure?: string;
+  focalLength?: number;
+  fNumber?: number;
+  iso?: number;
 }
 
 export interface Tag {

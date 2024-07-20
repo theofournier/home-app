@@ -3,6 +3,7 @@ import NextLink from "next/link";
 
 import { getPhoto } from "@/lib/supabase/queries/getPhoto";
 import { notFound } from "next/navigation";
+import { IconBuilding, IconTagFilled } from "@tabler/icons-react";
 
 export default async function Photo({
   params: { id },
@@ -39,20 +40,33 @@ export default async function Photo({
           </NextLink>
         </div>
       </div>
-      <div className="col-span-1 md:col-span-1">
-        <div className="grid grid-cols-2 md:grid-cols-1 gap-1 sticky top-16">
-          <div>
-            <h1>{photo.title}</h1>
-            <p>{photo.description}</p>
-            <p>{photo.tags?.map((tag) => tag.title).join(", ")}</p>
-            <p>{photo.location}</p>
+      <div className="col-span-1">
+        <div className="grid grid-cols-2 md:grid-cols-1 gap-x-1 gap-y-4 sticky top-16">
+          <div className="space-y-4">
+            <div>
+              <h1 className="text-lg font-bold">{photo.title}</h1>
+              <p>{photo.description}</p>
+            </div>
+            <div className="flex flex-row items-center gap-2">
+              <IconBuilding size="1.1rem" />
+              <p>{photo.location}</p>
+            </div>
+            <div className="flex flex-row items-center gap-2">
+              <IconTagFilled size="1.1rem" />
+              <p>{photo.tags?.map((tag) => tag.title).join(" · ")}</p>
+            </div>
           </div>
-          <div>
-            <h1>{photo.exposure}</h1>
-            <p>
-              w: {photo.width} x h:{photo.height}
-            </p>
-            <p>{photo.date}</p>
+          <div className="space-y-4">
+            <ul>
+              <li>{photo.exifData?.focalLength}mm</li>
+              <li>ƒ/{photo.exifData?.fNumber}</li>
+              <li>{photo.exifData?.exposure}s</li>
+              <li>ISO {photo.exifData?.iso}</li>
+              <li>
+                {photo.width} x {photo.height}
+              </li>
+            </ul>
+            {photo.date && <p>{new Date(photo.date).toDateString()}</p>}
           </div>
         </div>
       </div>

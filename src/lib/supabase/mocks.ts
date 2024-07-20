@@ -1,9 +1,16 @@
-import { Photo, Tag } from "./types";
+import { ExifData, Photo, Tag } from "./types";
 
 export const tags: Tag[] = [
   { value: "nature", title: "Nature" },
   { value: "city", title: "City" },
 ];
+
+export const exifData1: ExifData = {
+  exposure: "1/1000",
+  fNumber: 16,
+  focalLength: 50,
+  iso: 200,
+};
 
 export const photos: Photo[] = [
   {
@@ -15,7 +22,7 @@ export const photos: Photo[] = [
     title: "Photo 1",
     description: "My photo 1",
     location: "Montreal",
-    exposure: "f/16, 1/1000, 400 ISO, 10m",
+    exifData: exifData1,
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
     tags: [
@@ -32,7 +39,7 @@ export const photos: Photo[] = [
     title: "Photo 2",
     description: "My photo 3",
     location: "New York",
-    exposure: "f/16, 1/1000, 400 ISO, 10m",
+    exifData: exifData1,
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
     tags: [{ value: "nature", title: "Nature" }],
@@ -46,7 +53,7 @@ export const photos: Photo[] = [
     title: "Photo 3",
     description: "My photo 3",
     location: "New York",
-    exposure: "f/16, 1/1000, 400 ISO, 10m",
+    exifData: exifData1,
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
     tags: [{ value: "nature", title: "Nature" }],
@@ -60,7 +67,7 @@ export const photos: Photo[] = [
     title: "Photo 4",
     description: "My photo 4",
     location: "New York",
-    exposure: "f/16, 1/1000, 400 ISO, 10m",
+    exifData: exifData1,
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
     tags: [{ value: "nature", title: "Nature" }],
@@ -74,7 +81,7 @@ export const photos: Photo[] = [
     title: "Photo 5",
     description: "My photo 5",
     location: "New York",
-    exposure: "f/16, 1/1000, 400 ISO, 10m",
+    exifData: exifData1,
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
     tags: [{ value: "city", title: "City" }],
@@ -88,7 +95,7 @@ export const photos: Photo[] = [
     title: "Photo 6",
     description: "My photo 6",
     location: "New York",
-    exposure: "f/16, 1/1000, 400 ISO, 10m",
+    exifData: exifData1,
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
   },
@@ -100,7 +107,7 @@ export const photos: Photo[] = [
     width: 3130,
     description: "My photo 7",
     location: "New York",
-    exposure: "f/16, 1/1000, 400 ISO, 10m",
+    exifData: exifData1,
     date: "2024-07-16T14:00:00.000",
     createdAt: "2024-07-16T14:00:00.000",
   },
