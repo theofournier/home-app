@@ -60,14 +60,17 @@ export const GalleryFilterItem = ({ category, value, title }: Props) => {
   };
 
   return (
-    <Button
-      color={selected ? "primary" : undefined}
-      size="sm"
-      startContent={selected ? <IconCheck /> : undefined}
-      type="button"
-      onPress={onPress}
-    >
-      {title ?? value}
-    </Button>
+    <div>
+      <Button
+        color={selected ? "primary" : undefined}
+        size="sm"
+        startContent={selected ? <IconCheck /> : undefined}
+        type="button"
+        onPress={onPress}
+        className="uppercase"
+      >
+        {title ?? value}
+      </Button>
+    </div>
   );
 };

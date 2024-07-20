@@ -8,7 +8,7 @@ export const GalleryFilterTags = async () => {
   return (
     <GalleryFilter
       title="Tags"
-      icon={<IconTagFilled />}
+      Icon={IconTagFilled}
       category="tags"
       values={tags}
     />

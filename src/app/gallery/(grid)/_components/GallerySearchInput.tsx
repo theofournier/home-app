@@ -25,7 +25,7 @@ export const GallerySearchInput = () => {
       type="search"
       variant="bordered"
       placeholder="Search photos..."
-      startContent={<IconSearch />}
+      startContent={<IconSearch size="1.2rem" />}
       defaultValue={searchParams.get("query")?.toString()}
       onValueChange={(value) => handleSearch(value)}
     />

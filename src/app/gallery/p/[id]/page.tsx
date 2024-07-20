@@ -40,7 +40,7 @@ export default async function Photo({
         </div>
       </div>
       <div className="col-span-1 md:col-span-1">
-        <div className="grid grid-cols-2 md:grid-cols-1 gap-1">
+        <div className="grid grid-cols-2 md:grid-cols-1 gap-1 sticky top-16">
           <div>
             <h1>{photo.title}</h1>
             <p>{photo.description}</p>

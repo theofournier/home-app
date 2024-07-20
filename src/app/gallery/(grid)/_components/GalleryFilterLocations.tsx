@@ -8,7 +8,7 @@ export const GalleryFilterLocations = async () => {
   return (
     <GalleryFilter
       title="Locations"
-      icon={<IconBuilding />}
+      Icon={IconBuilding}
       category="locations"
       values={locations.map((location) => ({ value: location }))}
     />
