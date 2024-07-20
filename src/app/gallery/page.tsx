@@ -1,39 +1,28 @@
 import { getPhotos } from "@/lib/supabase/queries/getPhotos";
 import { NextPageProps } from "@/lib/types";
-import { redirect } from "next/navigation";
 import { GallerySearchInput } from "./_components/GallerySearchInput";
-import { GallerySearchTags } from "./_components/GallerySearchTags";
+import { GalleryFilterTags } from "./_components/GalleryFilterTags";
 import { GalleryGrid } from "./_components/GalleryGrid";
+import { GalleryFilterLocations } from "./_components/GalleryFilterLocations";
 
 type Props = {
   query?: string;
   tags?: string;
+  locations?: string;
 };
 
 export default async function GalleryPage({
   searchParams,
 }: NextPageProps<Props>) {
   const searchQuery = searchParams.query;
-  const searchTags = searchParams.tags?.split(",");
+  const filterTags = searchParams.tags?.split(",");
+  const filterLocations = searchParams.locations?.split(",");
 
   const photos = await getPhotos({
     query: searchQuery,
-    tags: searchTags,
+    tags: filterTags,
+    locations: filterLocations,
   });
-
-  const onSearch = async (formData: FormData) => {
-    "use server";
-
-    const query = formData.get("query") ?? searchQuery;
-    const tags = formData.getAll("tags") ?? searchTags;
-
-    const params = Object.entries({ query, tags: tags.join(",") })
-      .filter(([key, value]) => Boolean(value) === true)
-      .map(([key, value]) => `${key}=${value}`)
-      .join("&");
-
-    redirect(`/gallery?${params}`);
-  };
 
   return (
     <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -41,7 +30,9 @@ export default async function GalleryPage({
         <GalleryGrid photos={photos} />
       </div>
       <div className="col-span-1 md:col-span-1 hidden md:block">
-        <p>Filters</p>
+        <GallerySearchInput />
+        <GalleryFilterTags />
+        <GalleryFilterLocations />
       </div>
     </div>
   );

@@ -1,27 +1,33 @@
+"use client";
+
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
-import { IconArrowRight, IconSearch } from "@tabler/icons-react";
+import { IconSearch } from "@tabler/icons-react";
+import { useDebouncedCallback } from "use-debounce";
 
-type Props = {
-  searchQuery?: string;
-  onSearch: (formData: FormData) => void;
-};
+export const GallerySearchInput = () => {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
-export const GallerySearchInput = ({ searchQuery, onSearch }: Props) => {
+  const handleSearch = useDebouncedCallback((query: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (query) {
+      params.set("query", query);
+    } else {
+      params.delete("query");
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }, 300);
+
   return (
-    <form action={onSearch}>
-      <Input
-        type="search"
-        name="query"
-        placeholder="Search photos..."
-        startContent={<IconSearch size="1rem" />}
-        endContent={
-          <Button isIconOnly type="submit">
-            <IconArrowRight size="1rem" />
-          </Button>
-        }
-        defaultValue={searchQuery}
-      />
-    </form>
+    <Input
+      type="search"
+      variant="bordered"
+      placeholder="Search photos..."
+      startContent={<IconSearch />}
+      defaultValue={searchParams.get("query")?.toString()}
+      onValueChange={(value) => handleSearch(value)}
+    />
   );
 };
