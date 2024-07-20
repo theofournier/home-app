@@ -36,10 +36,13 @@ export default async function GalleryPage({
   };
 
   return (
-    <div className="container mx-auto px-4">
-      <GallerySearchInput onSearch={onSearch} searchQuery={searchQuery} />
-      <GallerySearchTags onSearch={onSearch} searchTags={searchTags} />
-      <GalleryGrid photos={photos} />
+    <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="col-span-1 md:col-span-3">
+        <GalleryGrid photos={photos} />
+      </div>
+      <div className="col-span-1 md:col-span-1 hidden md:block">
+        <p>Filters</p>
+      </div>
     </div>
   );
 }

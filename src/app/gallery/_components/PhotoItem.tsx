@@ -9,14 +9,16 @@ type Props = {
 
 export const PhotoItem = ({ photo }: Props) => {
   return (
-    <NextLink href={`/gallery/p/${photo.id}`} className="relative my-auto">
+    <NextLink
+      href={`/gallery/p/${photo.id}`}
+      className="active:brightness-75 flex relative overflow-hidden aspect-[1.5/1]"
+    >
       <NextImage
         alt={photo.title ?? photo.id}
         src={photo.url}
-        height={photo.height}
-        width={photo.width}
-        className="max-h-[600px]"
         style={{ objectFit: "cover" }}
+        width={400}
+        height={400 / 1.5}
       />
       <div className="opacity-0 hover:opacity-100 duration-300 absolute inset-0 z-10 text-white flex flex-col justify-between bg-black/40">
         <div className="p-1">
