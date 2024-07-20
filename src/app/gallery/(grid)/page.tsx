@@ -1,4 +1,4 @@
-import { getPhotos } from "@/lib/supabase/queries/getPhotos";
+import { getPhotos } from "@/lib/services/queries/getPhotos";
 import { NextPageProps } from "@/lib/types";
 import { GallerySearchInput } from "./_components/GallerySearchInput";
 import { GalleryFilterTags } from "./_components/GalleryFilterTags";

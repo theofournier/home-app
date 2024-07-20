@@ -1,4 +1,4 @@
-import { Photo } from "@/lib/supabase/types";
+import { Photo } from "@/lib/services/types";
 import { PhotoItem } from "./PhotoItem";
 
 type Props = {

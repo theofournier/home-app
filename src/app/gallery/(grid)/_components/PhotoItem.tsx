@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import NextImage from "next/image";
 
-import { Photo } from "@/lib/supabase/types";
+import { Photo } from "@/lib/services/types";
 
 type Props = {
   photo: Photo;

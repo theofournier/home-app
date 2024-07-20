@@ -1,6 +1,6 @@
 import { IconBuilding } from "@tabler/icons-react";
 import { GalleryFilter } from "./GalleryFilter";
-import { getLocations } from "@/lib/supabase/queries/getLocations";
+import { getLocations } from "@/lib/services/queries/getLocations";
 
 export const GalleryFilterLocations = async () => {
   const locations = await getLocations();
