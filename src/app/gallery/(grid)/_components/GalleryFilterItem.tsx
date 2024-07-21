@@ -67,7 +67,6 @@ export const GalleryFilterItem = ({ category, value, title }: Props) => {
         startContent={selected ? <IconCheck /> : undefined}
         type="button"
         onPress={onPress}
-        className="uppercase"
       >
         {title ?? value}
       </Button>

@@ -46,6 +46,14 @@ export interface Tag {
   description?: string;
 }
 
+export interface PhotoTagsDB extends PhotoDB {
+  tags: TagDB[] | null;
+}
+
+export const mapPhotoTagsDB = (photoTagsDB: PhotoTagsDB): Photo => {
+  return { ...mapPhotoDB(photoTagsDB), tags: photoTagsDB.tags?.map(mapTagDB) };
+};
+
 export const mapPhotoDB = (photoDB: PhotoDB): Photo => ({
   id: photoDB.id,
   url: photoDB.url,
@@ -61,7 +69,6 @@ export const mapPhotoDB = (photoDB: PhotoDB): Photo => ({
     iso: photoDB.iso ?? undefined,
   },
   date: photoDB.date ?? undefined,
-  tags: [],
   createdAt: photoDB.created_at,
 });
 

@@ -1,5 +1,5 @@
 import { sql } from "@vercel/postgres";
-import { mapPhotoDB, Photo, PhotoDB } from "../types";
+import { mapPhotoTagsDB, Photo, PhotoTagsDB } from "../types";
 
 type GetPhotosParams = {
   query?: string;
@@ -12,9 +12,15 @@ export const getPhotos = async ({
   tags,
   locations,
 }: GetPhotosParams): Promise<Photo[]> => {
-  const { rows } = await sql<PhotoDB>`SELECT * FROM photos;`;
+  const { rows } = await sql<PhotoTagsDB>`
+  SELECT *, 
+  (SELECT array_agg(json_build_object('value', t.value, 'title', t.title, 'description', t.description)) 
+    FROM photos_tags pt JOIN tags t ON t.value = pt.tag_value 
+    WHERE p.id = pt.photo_id)  as tags
+  FROM photos p
+  ORDER BY date DESC;`;
 
-  const photos: Photo[] = rows.map(mapPhotoDB);
+  const photos: Photo[] = rows.map(mapPhotoTagsDB);
 
   return photos
     .filter((photo) => (query ? photo.title === query : true))

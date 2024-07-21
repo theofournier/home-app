@@ -25,8 +25,8 @@ export const PhotoItem = ({ photo }: Props) => {
           <span className="text-xl">{photo.title}</span>
         </div>
         <div className="flex flex-row justify-between items-end">
-          <p>{photo?.tags?.map((tag) => tag.title).join(", ")}</p>
-          <div className="flex flex-col items-end">
+          <p>{photo?.tags?.map((tag) => tag.title).join(" · ")}</p>
+          <div className="flex flex-col items-end text-end">
             <span>{photo.location}</span>
             {photo.date && <span>{new Date(photo.date).toDateString()}</span>}
           </div>
