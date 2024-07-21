@@ -10,8 +10,8 @@ export default async function Home() {
   }
 
   return (
-    <section className="relative h-full">
-      <NextLink href={`/gallery/p/${randomPhoto.id}`}>
+    <NextLink href={`/gallery/p/${randomPhoto.id}`}>
+      <div className="relative h-full">
         <NextImage
           fill
           sizes="100vw"
@@ -22,7 +22,7 @@ export default async function Home() {
           }}
           priority
         />
-      </NextLink>
-    </section>
+      </div>
+    </NextLink>
   );
 }

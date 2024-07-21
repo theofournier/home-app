@@ -1,7 +1,8 @@
 import { sql } from "@vercel/postgres";
 import { mapPhotoDB, Photo, PhotoDB } from "../types";
+import { cache } from "react";
 
-export const getRandomPhoto = async (): Promise<Photo | undefined> => {
+export const getRandomPhoto = cache(async (): Promise<Photo | undefined> => {
   const { rows } = await sql<PhotoDB>`
   SELECT *
   FROM photos
@@ -14,4 +15,4 @@ export const getRandomPhoto = async (): Promise<Photo | undefined> => {
   }
 
   return photos[0];
-};
+});
