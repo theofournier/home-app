@@ -39,7 +39,9 @@ export const SignInForm = () => {
         <p className="text-danger">{state.errorMessage}</p>
       )}
       <input
-        type="hidden"
+        hidden
+        aria-hidden
+        readOnly
         name={KEY_CALLBACK_URL}
         value={params.get(KEY_CALLBACK_URL) ?? ""}
       />

@@ -4,10 +4,9 @@ export const PATH_ROOT = "/";
 export const PATH_GALLERY = "/gallery";
 export const PATH_SIGN_IN = "/sign-in";
 export const PATH_ADMIN = "/admin";
+export const PATH_ADMIN_GALLERY = `${PATH_ADMIN}/gallery`;
 
 export const PREFIX_PHOTO = `${PATH_GALLERY}/p`;
-
-export const PATHS_ADMIN = [PATH_ADMIN];
 
 export const pathForPhoto = (photo: Photo) => `${PREFIX_PHOTO}/${photo.id}`;
 
