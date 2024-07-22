@@ -6,9 +6,9 @@ export default async function AdminGallery() {
   return (
     <div>
       Admin gallery
-      <div>
+      <div className="divide-y">
         {photos.map((photo) => (
-          <EditPhotoItem photo={photo} />
+          <EditPhotoItem key={photo.id} photo={photo} />
         ))}
       </div>
     </div>

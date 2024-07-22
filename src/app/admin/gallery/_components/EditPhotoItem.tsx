@@ -31,7 +31,7 @@ export const EditPhotoItem = ({ photo }: Props) => {
   return (
     <form action={formAction}>
       <input name="photoId" value={photo.id} hidden aria-hidden readOnly />
-      <div className="grid grid-cols-6 gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-2 p-2 md:p-4">
         <div className="flex flex-col gap-1">
           <NextLink
             href={pathForPhoto(photo)}
@@ -104,6 +104,9 @@ export const EditPhotoItem = ({ photo }: Props) => {
         </div>
         <div>
           <SaveButton />
+          {state.errorMessage && (
+            <p className="text-danger">{state.errorMessage}</p>
+          )}
         </div>
       </div>
     </form>

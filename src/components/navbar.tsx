@@ -11,6 +11,7 @@ import { ThemeSwitch } from "./theme-switch";
 
 import { siteConfig } from "@/config/site";
 import { auth, signOut } from "@/lib/auth/auth";
+import { PATH_ADMIN } from "@/config/path";
 
 export const Navbar = async () => {
   const session = await auth();
@@ -36,14 +37,17 @@ export const Navbar = async () => {
         </ul>
         <ThemeSwitch />
         {session?.user && (
-          <form
-            action={async () => {
-              "use server";
-              await signOut();
-            }}
-          >
-            <button type="submit">Sign Out</button>
-          </form>
+          <>
+            <NextLink href={PATH_ADMIN}>Admin</NextLink>
+            <form
+              action={async () => {
+                "use server";
+                await signOut();
+              }}
+            >
+              <button type="submit">Sign Out</button>
+            </form>
+          </>
         )}
       </NavbarContent>
     </NextUINavbar>
