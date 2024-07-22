@@ -2,6 +2,7 @@ import NextLink from "next/link";
 import NextImage from "next/image";
 
 import { Photo } from "@/lib/services/types";
+import { pathForPhoto } from "@/config/path";
 
 type Props = {
   photo: Photo;
@@ -10,7 +11,7 @@ type Props = {
 export const PhotoItem = ({ photo }: Props) => {
   return (
     <NextLink
-      href={`/gallery/p/${photo.id}`}
+      href={pathForPhoto(photo)}
       className="active:brightness-75 flex relative aspect-[1.5/1]"
     >
       <NextImage

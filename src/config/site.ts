@@ -1,3 +1,5 @@
+import { PATH_GALLERY, PATH_ROOT } from "./path";
+
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
@@ -6,11 +8,11 @@ export const siteConfig = {
   navItems: [
     {
       label: "Home",
-      href: "/",
+      href: PATH_ROOT,
     },
     {
       label: "Gallery",
-      href: "/gallery",
+      href: PATH_GALLERY,
     },
   ],
 };

@@ -1,3 +1,4 @@
+import { pathForPhoto } from "@/config/path";
 import { getRandomPhoto } from "@/lib/services/queries/getRandomPhoto";
 import NextImage from "next/image";
 import NextLink from "next/link";
@@ -10,7 +11,7 @@ export default async function Home() {
   }
 
   return (
-    <NextLink href={`/gallery/p/${randomPhoto.id}`}>
+    <NextLink href={pathForPhoto(randomPhoto)}>
       <div className="relative h-full">
         <NextImage
           fill

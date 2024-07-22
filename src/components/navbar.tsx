@@ -10,10 +10,13 @@ import clsx from "clsx";
 import { ThemeSwitch } from "./theme-switch";
 
 import { siteConfig } from "@/config/site";
+import { auth, signOut } from "@/lib/auth/auth";
 
-export const Navbar = () => {
+export const Navbar = async () => {
+  const session = await auth();
+
   return (
-    <NextUINavbar shouldHideOnScroll maxWidth="full" position="sticky">
+    <NextUINavbar maxWidth="full" position="sticky">
       <NavbarContent justify="start">
         <ul className="flex gap-4 justify-start mx-2">
           {siteConfig.navItems.map((item) => (
@@ -32,6 +35,16 @@ export const Navbar = () => {
           ))}
         </ul>
         <ThemeSwitch />
+        {session?.user && (
+          <form
+            action={async () => {
+              "use server";
+              await signOut();
+            }}
+          >
+            <button type="submit">Sign Out</button>
+          </form>
+        )}
       </NavbarContent>
     </NextUINavbar>
   );
