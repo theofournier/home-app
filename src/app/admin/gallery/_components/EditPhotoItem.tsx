@@ -3,15 +3,17 @@
 import NextImage from "next/image";
 import NextLink from "next/link";
 
-import { Photo } from "@/lib/services/types";
+import { Photo, Tag } from "@/lib/services/types";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { pathForPhoto } from "@/config/path";
 import { useFormState, useFormStatus } from "react-dom";
 import { editPhotoAction } from "@/lib/actions/photo";
+import { Select, SelectItem } from "@nextui-org/select";
 
 type Props = {
   photo: Photo;
+  tags: Tag[];
 };
 
 const SaveButton = () => {
@@ -24,7 +26,7 @@ const SaveButton = () => {
   );
 };
 
-export const EditPhotoItem = ({ photo }: Props) => {
+export const EditPhotoItem = ({ photo, tags }: Props) => {
   const [state, formAction] = useFormState(editPhotoAction, {
     errorMessage: "",
   });
@@ -32,7 +34,7 @@ export const EditPhotoItem = ({ photo }: Props) => {
     <form action={formAction}>
       <input name="photoId" value={photo.id} hidden aria-hidden readOnly />
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-2 p-2 md:p-4">
-        <div className="flex flex-col gap-1">
+        <div className="space-y-1">
           <NextLink
             href={pathForPhoto(photo)}
             target="_blank"
@@ -48,7 +50,7 @@ export const EditPhotoItem = ({ photo }: Props) => {
           </NextLink>
           <Input name="url" label="URL" defaultValue={photo.url} />
         </div>
-        <div>
+        <div className="space-y-1">
           <Input name="title" label="Title" defaultValue={photo.title} />
           <Input
             name="description"
@@ -61,14 +63,28 @@ export const EditPhotoItem = ({ photo }: Props) => {
             defaultValue={photo.date?.toISOString()}
           />
         </div>
-        <div>
+        <div className="space-y-1">
           <Input
             name="location"
             label="Location"
             defaultValue={photo.location}
           />
+          <Select
+            name="tag"
+            label="Tags"
+            placeholder="Select tags"
+            selectionMode="multiple"
+            className="max-w-xs"
+            defaultSelectedKeys={photo.tags?.map((tag) => tag.value)}
+          >
+            {tags.map((tag) => (
+              <SelectItem key={tag.value} value={tag.value}>
+                {tag.title ?? tag.value}
+              </SelectItem>
+            ))}
+          </Select>
         </div>
-        <div>
+        <div className="space-y-1">
           <Input
             name="exposure"
             label="Exposure"
@@ -90,7 +106,7 @@ export const EditPhotoItem = ({ photo }: Props) => {
             defaultValue={photo.exifData?.iso?.toString()}
           />
         </div>
-        <div>
+        <div className="space-y-1">
           <Input
             name="width"
             label="width"
