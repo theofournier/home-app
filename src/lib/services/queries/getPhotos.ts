@@ -1,6 +1,6 @@
-import { sql } from "@vercel/postgres";
-import { mapPhotoTagsDB, Photo, PhotoTagsDB } from "../types";
+import { mapPhotoTagsDB, Photo } from "../types";
 import { cache } from "react";
+import prisma from "../prisma";
 
 type GetPhotosParams = {
   query?: string;
@@ -10,27 +10,38 @@ type GetPhotosParams = {
 
 export const getPhotos = cache(
   async ({ query, tags, locations }: GetPhotosParams): Promise<Photo[]> => {
-    const { rows } = await sql<PhotoTagsDB>`
-  SELECT *, 
-  (SELECT array_agg(json_build_object('value', t.value, 'title', t.title, 'description', t.description)) 
-    FROM photos_tags pt JOIN tags t ON t.value = pt.tag_value 
-    WHERE p.id = pt.photo_id)  as tags
-  FROM photos p
-  ORDER BY date DESC;`;
+    const photosDB = await prisma.photos.findMany({
+      include: {
+        photos_tags: {
+          include: {
+            tags: true,
+          },
+        },
+      },
+      where: {
+        title: {
+          search: query,
+        },
+        location: {
+          in: locations,
+        },
+        ...(tags && tags.length > 0
+          ? {
+              photos_tags: {
+                some: {
+                  tag_value: {
+                    in: tags,
+                  },
+                },
+              },
+            }
+          : undefined),
+      },
+      orderBy: [{ date: "desc" }],
+    });
 
-    const photos: Photo[] = rows.map(mapPhotoTagsDB);
+    const photos: Photo[] = photosDB.map(mapPhotoTagsDB);
 
-    return photos
-      .filter((photo) => (query ? photo.title === query : true))
-      .filter((photo) =>
-        tags && tags.length > 0
-          ? photo.tags?.some((tag) => tags?.includes(tag.value ?? ""))
-          : true
-      )
-      .filter((photo) =>
-        locations && locations.length > 0
-          ? locations.includes(photo.location ?? "")
-          : true
-      );
+    return photos;
   }
 );

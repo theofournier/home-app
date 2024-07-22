@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model photos {
+  id           String        @id @db.VarChar(255)
+  url          String
+  height       Int
+  width        Int
+  title        String?
+  description  String?
+  location     String?
+  date         DateTime?     @db.Timestamptz(6)
+  exposure     String?
+  focal_length Int?
+  f_number     Int?
+  iso          Int?
+  created_at   DateTime      @default(now()) @db.Timestamptz(6)
+  photos_tags  photos_tags[]
+}
+
+model photos_tags {
+  photo_id  String @db.VarChar(255)
+  tag_value String @db.VarChar(255)
+  photos    photos @relation(fields: [photo_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tags      tags   @relation(fields: [tag_value], references: [value], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([photo_id, tag_value])
+}
+
+model tags {
+  value       String        @id @db.VarChar(255)
+  title       String?
+  description String?
+  photos_tags photos_tags[]
+}

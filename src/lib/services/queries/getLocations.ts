@@ -1,10 +1,17 @@
-import { sql } from "@vercel/postgres";
 import { cache } from "react";
+import prisma from "../prisma";
 
 export const getLocations = cache(async (): Promise<string[]> => {
-  const { rows } = await sql<{
-    location: string;
-  }>`SELECT DISTINCT(location) FROM photos ORDER BY location;`;
+  const locationsDB = await prisma.photos.findMany({
+    select: {
+      location: true,
+    },
+    distinct: ["location"],
+    where: {
+      location: { not: null },
+    },
+    orderBy: [{ location: "asc" }],
+  });
 
-  return rows.map(({ location }) => location);
+  return locationsDB.map(({ location }) => location!);
 });

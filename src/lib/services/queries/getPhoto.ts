@@ -1,20 +1,24 @@
-import { sql } from "@vercel/postgres";
-import { mapPhotoTagsDB, Photo, PhotoTagsDB } from "../types";
+import { mapPhotoTagsDB, Photo } from "../types";
 import { cache } from "react";
+import prisma from "../prisma";
 
 export const getPhoto = cache(
   async (id: string): Promise<Photo | undefined> => {
-    const { rows } = await sql<PhotoTagsDB>`SELECT *, 
-    (SELECT array_agg(json_build_object('value', t.value, 'title', t.title, 'description', t.description)) 
-    FROM photos_tags pt JOIN tags t ON t.value = pt.tag_value 
-    WHERE p.id = pt.photo_id)  as tags 
-    FROM photos p 
-    WHERE id = ${id};`;
+    const photoDB = await prisma.photos.findUnique({
+      include: {
+        photos_tags: {
+          include: { tags: true },
+        },
+      },
+      where: {
+        id,
+      },
+    });
 
-    if (rows.length === 0) {
+    if (!photoDB) {
       return undefined;
     }
 
-    return mapPhotoTagsDB(rows[0]);
+    return mapPhotoTagsDB(photoDB);
   }
 );

@@ -1,23 +1,8 @@
-export interface PhotoDB {
-  id: string;
-  url: string;
-  height: number;
-  width: number;
-  title: string | null;
-  description: string | null;
-  location: string | null;
-  exposure: string | null;
-  focal_length: number | null;
-  f_number: number | null;
-  iso: number | null;
-  date: Date | null;
-  created_at: Date;
-}
-export interface TagDB {
-  value: string;
-  title: string | null;
-  description: string | null;
-}
+import { photos, photos_tags, tags } from "@prisma/client";
+
+export type PhotoTagsDB = photos & {
+  photos_tags: (photos_tags & { tags: tags })[];
+};
 
 export interface Photo {
   id: string;
@@ -46,15 +31,14 @@ export interface Tag {
   description?: string;
 }
 
-export interface PhotoTagsDB extends PhotoDB {
-  tags: TagDB[] | null;
-}
-
 export const mapPhotoTagsDB = (photoTagsDB: PhotoTagsDB): Photo => {
-  return { ...mapPhotoDB(photoTagsDB), tags: photoTagsDB.tags?.map(mapTagDB) };
+  return {
+    ...mapPhotoDB(photoTagsDB),
+    tags: photoTagsDB.photos_tags?.map((photoTag) => mapTagDB(photoTag.tags)),
+  };
 };
 
-export const mapPhotoDB = (photoDB: PhotoDB): Photo => ({
+export const mapPhotoDB = (photoDB: photos): Photo => ({
   id: photoDB.id,
   url: photoDB.url,
   height: photoDB.height,
@@ -72,7 +56,7 @@ export const mapPhotoDB = (photoDB: PhotoDB): Photo => ({
   createdAt: photoDB.created_at,
 });
 
-export const mapTagDB = (tagDB: TagDB): Tag => ({
+export const mapTagDB = (tagDB: tags): Tag => ({
   value: tagDB.value,
   title: tagDB.title ?? undefined,
   description: tagDB.description ?? undefined,

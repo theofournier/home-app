@@ -1,18 +1,17 @@
-import { sql } from "@vercel/postgres";
-import { mapPhotoDB, Photo, PhotoDB } from "../types";
+import { mapPhotoDB, Photo } from "../types";
 import { cache } from "react";
+import prisma from "../prisma";
 
 export const getRandomPhoto = cache(async (): Promise<Photo | undefined> => {
-  const { rows } = await sql<PhotoDB>`
-  SELECT *
-  FROM photos
-  ORDER BY RANDOM() LIMIT 1;`;
+  const photosCount = await prisma.photos.count();
 
-  const photos: Photo[] = rows.map(mapPhotoDB);
+  const randomPhoto = await prisma.photos.findFirst({
+    skip: Math.max(0, Math.floor(Math.random() * photosCount)),
+  });
 
-  if (rows.length === 0) {
+  if (!randomPhoto) {
     return undefined;
   }
 
-  return photos[0];
+  return mapPhotoDB(randomPhoto);
 });

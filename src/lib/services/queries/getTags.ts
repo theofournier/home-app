@@ -1,9 +1,11 @@
-import { sql } from "@vercel/postgres";
-import { mapTagDB, Tag, TagDB } from "../types";
+import { mapTagDB, Tag } from "../types";
 import { cache } from "react";
+import prisma from "../prisma";
 
 export const getTags = cache(async (): Promise<Tag[]> => {
-  const { rows } = await sql<TagDB>`SELECT * FROM tags ORDER BY value;`;
+  const tagsDB = await prisma.tags.findMany({
+    orderBy: [{ title: "asc" }],
+  });
 
-  return rows.map(mapTagDB);
+  return tagsDB.map(mapTagDB);
 });
