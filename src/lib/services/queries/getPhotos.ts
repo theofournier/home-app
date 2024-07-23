@@ -6,10 +6,16 @@ type GetPhotosParams = {
   query?: string;
   tags?: string[];
   locations?: string[];
+  sort?: string;
 };
 
 export const getPhotos = cache(
-  async ({ query, tags, locations }: GetPhotosParams): Promise<Photo[]> => {
+  async ({
+    query,
+    tags,
+    locations,
+    sort = "date",
+  }: GetPhotosParams): Promise<Photo[]> => {
     const photosDB = await prisma.photos.findMany({
       include: {
         photos_tags: {
@@ -37,7 +43,7 @@ export const getPhotos = cache(
             }
           : undefined),
       },
-      orderBy: [{ date: "desc" }],
+      orderBy: [{ [sort]: "desc" }],
     });
 
     const photos: Photo[] = photosDB.map(mapPhotoTagsDB);

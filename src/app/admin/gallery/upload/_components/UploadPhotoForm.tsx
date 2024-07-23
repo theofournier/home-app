@@ -5,7 +5,7 @@ import { Button } from "@nextui-org/button";
 import { useFormState, useFormStatus } from "react-dom";
 import NextLink from "next/link";
 import NextImage from "next/image";
-import { PATH_ADMIN_GALLERY_ADD } from "@/config/path";
+import { PATH_ADMIN_GALLERY } from "@/config/path";
 import { ChangeEvent, useState } from "react";
 
 const UploadButton = () => {
@@ -43,7 +43,7 @@ export const UploadPhotoForm = () => {
       {state.successMessage && (
         <>
           <p className="text-success">{state.successMessage}</p>
-          <NextLink href={PATH_ADMIN_GALLERY_ADD}>Go to add photos</NextLink>
+          <NextLink href={PATH_ADMIN_GALLERY}>Go to edit photos</NextLink>
         </>
       )}
       <div className="grid grid-cols-1 md:grid-cols-4">
@@ -55,6 +55,7 @@ export const UploadPhotoForm = () => {
             style={{ objectFit: "cover", aspectRatio: "1.5/1" }}
             width={200}
             height={200 / 1.5}
+            onLoad={(e) => console.log(e.target)}
           />
         ))}
       </div>

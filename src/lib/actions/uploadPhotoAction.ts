@@ -1,5 +1,7 @@
 "use server";
 
+import { nanoid } from "nanoid";
+import { createPhotos } from "../services/queries/createPhotos";
 import { uploadPhoto } from "../services/queries/uploadPhoto";
 
 export const uploadPhotoAction = async (
@@ -9,7 +11,11 @@ export const uploadPhotoAction = async (
   const photos = formData.getAll("photos") as File[];
 
   try {
-    await Promise.all(photos.map(uploadPhoto));
+    const results = await Promise.all(photos.map(uploadPhoto));
+
+    await createPhotos(
+      results.map((url) => ({ id: nanoid(15), url, height: 0, width: 0 }))
+    );
   } catch (error) {
     console.log(error);
     return { errorMessage: "Error uploading photos", successMessage: "" };
