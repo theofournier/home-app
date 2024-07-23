@@ -29,6 +29,7 @@ const SaveButton = () => {
 export const EditPhotoItem = ({ photo, tags }: Props) => {
   const [state, formAction] = useFormState(editPhotoAction, {
     errorMessage: "",
+    successMessage: "",
   });
   return (
     <form action={formAction}>
@@ -70,7 +71,7 @@ export const EditPhotoItem = ({ photo, tags }: Props) => {
             defaultValue={photo.location}
           />
           <Select
-            name="tag"
+            name="tags"
             label="Tags"
             placeholder="Select tags"
             selectionMode="multiple"
@@ -122,6 +123,9 @@ export const EditPhotoItem = ({ photo, tags }: Props) => {
           <SaveButton />
           {state.errorMessage && (
             <p className="text-danger">{state.errorMessage}</p>
+          )}
+          {state.successMessage && (
+            <p className="text-success">{state.successMessage}</p>
           )}
         </div>
       </div>
