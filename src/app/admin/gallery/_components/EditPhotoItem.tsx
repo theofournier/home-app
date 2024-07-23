@@ -20,7 +20,7 @@ const SaveButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" isLoading={pending}>
+    <Button type="submit" isLoading={pending} color="primary">
       Save
     </Button>
   );
