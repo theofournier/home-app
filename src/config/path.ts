@@ -5,6 +5,8 @@ export const PATH_GALLERY = "/gallery";
 export const PATH_SIGN_IN = "/sign-in";
 export const PATH_ADMIN = "/admin";
 export const PATH_ADMIN_GALLERY = `${PATH_ADMIN}/gallery`;
+export const PATH_ADMIN_GALLERY_ADD = `${PATH_ADMIN_GALLERY}/add`;
+export const PATH_ADMIN_GALLERY_ADD_UPLOAD = `${PATH_ADMIN_GALLERY_ADD}/upload`;
 
 export const PREFIX_PHOTO = `${PATH_GALLERY}/p`;
 

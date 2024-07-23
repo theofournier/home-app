@@ -8,7 +8,7 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { pathForPhoto } from "@/config/path";
 import { useFormState, useFormStatus } from "react-dom";
-import { editPhotoAction } from "@/lib/actions/photo";
+import { editPhotoAction } from "@/lib/actions/editPhotoAction";
 import { Select, SelectItem } from "@nextui-org/select";
 
 type Props = {
