@@ -12,6 +12,8 @@ import { ThemeSwitch } from "./theme-switch";
 import { siteConfig } from "@/config/site";
 import { auth, signOut } from "@/lib/auth/auth";
 import { PATH_ADMIN } from "@/config/path";
+import { IconBrandGithub } from "@tabler/icons-react";
+import { Button } from "@nextui-org/button";
 
 export const Navbar = async () => {
   const session = await auth();
@@ -49,6 +51,17 @@ export const Navbar = async () => {
             </form>
           </>
         )}
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NextLink
+          href="https://github.com/theofournier/home-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button isIconOnly>
+            <IconBrandGithub />
+          </Button>
+        </NextLink>
       </NavbarContent>
     </NextUINavbar>
   );
