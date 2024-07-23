@@ -25,16 +25,16 @@ export default async function GalleryPage({
   });
 
   return (
-    <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-x-4 lg:gap-x-6">
-      <div className="col-span-1 md:col-span-3">
-        <GalleryGrid photos={photos} />
-      </div>
-      <div className="col-span-1 hidden md:block">
-        <div className="space-y-4 sticky top-16">
+    <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 lg:gap-x-6">
+      <div className="col-span-1 md:order-last">
+        <div className="space-y-2 px-2 md:px-0 md:space-y-4 md:sticky md:top-16">
           <GallerySearchInput />
           <GalleryFilterTags />
           <GalleryFilterLocations />
         </div>
+      </div>
+      <div className="col-span-1 md:col-span-3">
+        <GalleryGrid photos={photos} />
       </div>
     </div>
   );

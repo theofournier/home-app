@@ -16,8 +16,8 @@ export const GalleryFilter = async ({
   values,
 }: Props) => {
   return (
-    <div className="space-y-1">
-      <div className="flex flex-row gap-1 mb-2 uppercase items-center">
+    <div className="space-y-1 space-x-1 flex flex-row md:flex-col items-center md:items-start overflow-x-auto no-scrollbar">
+      <div className="flex flex-row gap-1 mr-2 md:mb-2 uppercase items-center">
         <Icon size="1.2rem" />
         <h3>{title}</h3>
       </div>
