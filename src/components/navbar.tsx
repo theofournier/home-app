@@ -2,6 +2,9 @@ import {
   Navbar as NextUINavbar,
   NavbarContent,
   NavbarItem,
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem,
 } from "@nextui-org/navbar";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
@@ -17,6 +20,33 @@ import { Button } from "@nextui-org/button";
 
 export const Navbar = async () => {
   const session = await auth();
+
+  const endContent = (
+    <>
+      {session?.user && (
+        <>
+          <NextLink href={PATH_ADMIN}>Admin</NextLink>
+          <form
+            action={async () => {
+              "use server";
+              await signOut();
+            }}
+          >
+            <button type="submit">Sign Out</button>
+          </form>
+        </>
+      )}
+      <NextLink
+        href="https://github.com/theofournier/home-app"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Button isIconOnly>
+          <IconBrandGithub />
+        </Button>
+      </NextLink>
+    </>
+  );
 
   return (
     <NextUINavbar maxWidth="full" position="sticky">
@@ -38,31 +68,14 @@ export const Navbar = async () => {
           ))}
         </ul>
         <ThemeSwitch />
-        {session?.user && (
-          <>
-            <NextLink href={PATH_ADMIN}>Admin</NextLink>
-            <form
-              action={async () => {
-                "use server";
-                await signOut();
-              }}
-            >
-              <button type="submit">Sign Out</button>
-            </form>
-          </>
-        )}
       </NavbarContent>
-      <NavbarContent justify="end">
-        <NextLink
-          href="https://github.com/theofournier/home-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button isIconOnly>
-            <IconBrandGithub />
-          </Button>
-        </NextLink>
+      <NavbarContent justify="end" className="sm:hidden">
+        <NavbarMenuToggle />
       </NavbarContent>
+      <NavbarContent justify="end" className="hidden sm:flex">
+        {endContent}
+      </NavbarContent>
+      <NavbarMenu>{endContent}</NavbarMenu>
     </NextUINavbar>
   );
 };
