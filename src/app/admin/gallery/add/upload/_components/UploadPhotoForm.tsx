@@ -49,6 +49,7 @@ export const UploadPhotoForm = () => {
       <div className="grid grid-cols-1 md:grid-cols-4">
         {photoFiles.map((photoFile) => (
           <NextImage
+            key={photoFile.name}
             src={URL.createObjectURL(photoFile)}
             alt={photoFile.name}
             style={{ objectFit: "cover", aspectRatio: "1.5/1" }}
