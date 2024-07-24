@@ -4,6 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
+        "ngrok": "ngrok http 3000",
 		"build": "next build",
 		"vercel-build": "prisma generate && next build",
 		"start": "next start",
@@ -54,6 +55,7 @@
 		"eslint-plugin-react": "^7.34.4",
 		"eslint-plugin-react-hooks": "^4.6.2",
 		"eslint-plugin-unused-imports": "^4.0.0",
+		"ngrok": "5.0.0-beta.2",
 		"postcss": "8.4.39",
 		"prisma": "^5.17.0",
 		"tailwind-variants": "0.2.1",

@@ -22,7 +22,6 @@ export const uploadPhotoServer = async (
       multipart: true,
     }
   );
-  console.log("server", result);
   return { photoName, blobResult: result };
 };
 
@@ -36,7 +35,6 @@ const uploadPhotoClient = async (photo: File): Promise<UploadPhotoResult> => {
       multipart: true,
     }
   );
-  console.log("client", result);
   return { photoName: photo.name, blobResult: result };
 };
 

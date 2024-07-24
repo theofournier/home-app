@@ -16,7 +16,7 @@ const UploadPhotoItem = ({
   status?: { success: boolean; reason?: string };
 }) => {
   return (
-    <div key={photoFile.name} className="relative">
+    <div className="relative">
       <NextImage
         src={URL.createObjectURL(photoFile)}
         alt={photoFile.name}
@@ -46,10 +46,7 @@ export const UploadPhotoForm = () => {
     results: { success: boolean; photoName: string; reason?: string }[];
   }>({
     loading: false,
-    results: [
-      { success: true, photoName: "baie-bw.jpg" },
-      { success: false, photoName: "beach-perce.jpg", reason: "Error upload" },
-    ],
+    results: [],
   });
   const [photoFiles, setPhotoFiles] = useState<File[]>([]);
 
@@ -126,6 +123,7 @@ export const UploadPhotoForm = () => {
       <div className="grid grid-cols-1 md:grid-cols-4">
         {photoFiles.map((photoFile) => (
           <UploadPhotoItem
+            key={photoFile.name}
             photoFile={photoFile}
             status={status.results.find(
               (res) => res.photoName === photoFile.name
