@@ -1,10 +1,16 @@
 import { photos } from "@prisma/client";
 import prisma from "../prisma";
+import { auth } from "@/lib/auth/auth";
 
 export const updatePhoto = async (
   { id, ...photo }: Omit<photos, "created_at">,
   tags: string[]
 ): Promise<void> => {
+  const session = await auth();
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
+
   await prisma.photos.update({
     where: {
       id,
