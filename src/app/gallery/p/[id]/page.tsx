@@ -4,12 +4,26 @@ import NextLink from "next/link";
 import { getPhoto } from "@/lib/services/queries/getPhoto";
 import { notFound } from "next/navigation";
 import { IconBuilding, IconTagFilled } from "@tabler/icons-react";
+import { Metadata, ResolvingMetadata } from "next";
 
-export default async function Photo({
-  params: { id },
-}: {
+type Props = {
   params: { id: string };
-}) {
+};
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const id = params.id;
+
+  const photo = await getPhoto(id);
+
+  return {
+    title: photo?.title || "Gallery",
+  };
+}
+
+export default async function Photo({ params: { id } }: Props) {
   const photo = await getPhoto(id);
 
   if (!photo) {

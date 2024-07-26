@@ -3,6 +3,11 @@ import { EditPhotoItem } from "./_components/EditPhotoItem";
 import { getTags } from "@/lib/services/queries/getTags";
 import NextLink from "next/link";
 import { PATH_ADMIN_GALLERY_UPLOAD } from "@/config/path";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Admin - Gallery",
+};
 
 export default async function AdminGallery() {
   const photos = await getPhotos({ sort: "created_at" });

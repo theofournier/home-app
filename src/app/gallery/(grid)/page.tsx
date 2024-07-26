@@ -4,11 +4,16 @@ import { GallerySearchInput } from "./_components/GallerySearchInput";
 import { GalleryFilterTags } from "./_components/GalleryFilterTags";
 import { GalleryGrid } from "./_components/GalleryGrid";
 import { GalleryFilterLocations } from "./_components/GalleryFilterLocations";
+import { Metadata } from "next";
 
 type Props = {
   query?: string;
   tags?: string;
   locations?: string;
+};
+
+export const metadata: Metadata = {
+  title: "Gallery",
 };
 
 export default async function GalleryPage({
