@@ -45,8 +45,8 @@ export const EditPhotoItem = ({ photo, tags }: Props) => {
               alt={photo.title ?? photo.id}
               src={photo.url}
               style={{ objectFit: "cover", aspectRatio: "1.5/1" }}
-              width={400}
-              height={400 / 1.5}
+              width={200}
+              height={200 / 1.5}
             />
           </NextLink>
           <Input name="url" label="URL" defaultValue={photo.url} />

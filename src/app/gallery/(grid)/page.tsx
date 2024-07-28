@@ -30,7 +30,7 @@ export default async function GalleryPage({
   });
 
   return (
-    <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 lg:gap-x-6">
+    <div className="container mb-4 mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 lg:gap-x-6">
       <div className="col-span-1 md:order-last">
         <div className="space-y-2 px-2 md:px-0 md:space-y-4 md:sticky md:top-16">
           <GallerySearchInput />

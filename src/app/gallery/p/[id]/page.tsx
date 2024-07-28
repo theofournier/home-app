@@ -33,7 +33,7 @@ export default async function Photo({ params: { id } }: Props) {
   const photoAspectRatio = photo.width / photo.height;
 
   return (
-    <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div className="container mb-4 mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
       <div className="col-span-1 md:col-span-3">
         <div className="flex justify-center">
           <NextLink
@@ -54,8 +54,8 @@ export default async function Photo({ params: { id } }: Props) {
           </NextLink>
         </div>
       </div>
-      <div className="col-span-1">
-        <div className="grid grid-cols-2 md:grid-cols-1 gap-x-1 gap-y-4 sticky top-16">
+      <div className="col-span-1 px-2 md:p-0">
+        <div className="grid grid-cols-2 md:grid-cols-1 gap-x-1 gap-y-4 md:sticky md:top-16">
           <div className="space-y-4">
             <div>
               <h1 className="text-lg font-bold">{photo.title}</h1>

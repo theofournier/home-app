@@ -3,9 +3,14 @@ import { cache } from "react";
 import prisma from "../prisma";
 
 export const getTags = cache(async (): Promise<Tag[]> => {
-  const tagsDB = await prisma.tags.findMany({
-    orderBy: [{ title: "asc" }],
-  });
+  try {
+    const tagsDB = await prisma.tags.findMany({
+      orderBy: [{ title: "asc" }],
+    });
 
-  return tagsDB.map(mapTagDB);
+    return tagsDB.map(mapTagDB);
+  } catch (error) {
+    console.log(`Error fetching tags: ${error}`);
+    return [];
+  }
 });

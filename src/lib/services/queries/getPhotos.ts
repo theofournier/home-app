@@ -16,38 +16,43 @@ export const getPhotos = cache(
     locations,
     sort = "date",
   }: GetPhotosParams): Promise<Photo[]> => {
-    const photosDB = await prisma.photos.findMany({
-      include: {
-        photos_tags: {
-          include: {
-            tags: true,
+    try {
+      const photosDB = await prisma.photos.findMany({
+        include: {
+          photos_tags: {
+            include: {
+              tags: true,
+            },
           },
         },
-      },
-      where: {
-        title: {
-          search: query,
-        },
-        location: {
-          in: locations,
-        },
-        ...(tags && tags.length > 0
-          ? {
-              photos_tags: {
-                some: {
-                  tag_value: {
-                    in: tags,
+        where: {
+          title: {
+            search: query,
+          },
+          location: {
+            in: locations,
+          },
+          ...(tags && tags.length > 0
+            ? {
+                photos_tags: {
+                  some: {
+                    tag_value: {
+                      in: tags,
+                    },
                   },
                 },
-              },
-            }
-          : undefined),
-      },
-      orderBy: [{ [sort]: "desc" }],
-    });
+              }
+            : undefined),
+        },
+        orderBy: [{ [sort]: "desc" }],
+      });
 
-    const photos: Photo[] = photosDB.map(mapPhotoTagsDB);
+      const photos: Photo[] = photosDB.map(mapPhotoTagsDB);
 
-    return photos;
+      return photos;
+    } catch (error) {
+      console.log(`Error fetching photos: ${error}`);
+      return [];
+    }
   }
 );

@@ -18,8 +18,8 @@ export const PhotoItem = ({ photo }: Props) => {
         alt={photo.title ?? photo.id}
         src={photo.url}
         style={{ objectFit: "cover" }}
-        width={400}
-        height={400 / 1.5}
+        width={300}
+        height={300 / 1.5}
       />
       <div className="opacity-0 hover:opacity-100 duration-300 absolute inset-0 z-10 text-white flex flex-col justify-between bg-black/30 px-2 py-1">
         <div>
