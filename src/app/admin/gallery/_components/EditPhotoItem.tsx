@@ -11,6 +11,7 @@ import { useFormState, useFormStatus } from "react-dom";
 import { editPhotoAction } from "@/lib/actions/editPhotoAction";
 import { Select, SelectItem } from "@nextui-org/select";
 import { CompressPhoto } from "./CompressPhoto";
+import { DeletePhoto } from "./DeletePhoto";
 
 type Props = {
   photo: Photo;
@@ -134,6 +135,7 @@ export const EditPhotoItem = ({ photo, tags }: Props) => {
             <p className="text-success">{state.successMessage}</p>
           )}
           <CompressPhoto id={photo.id} url={photo.url} title={photo.title} />
+          <DeletePhoto id={photo.id} />
         </div>
       </div>
     </form>

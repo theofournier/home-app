@@ -1,4 +1,4 @@
-import { put, PutBlobResult } from "@vercel/blob";
+import { put, del, PutBlobResult } from "@vercel/blob";
 import { upload } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
 
@@ -28,6 +28,10 @@ export const uploadPhotoServer = async (
     }
   );
   return { photoName, blobResult: result };
+};
+
+export const deletePhotoServer = async (photoUrl: string) => {
+  await del(photoUrl);
 };
 
 const uploadPhotoClient = async (
