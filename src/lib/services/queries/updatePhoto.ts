@@ -1,16 +1,11 @@
-import { photos } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import prisma from "../prisma";
-import { auth } from "@/lib/auth/auth";
 
 export const updatePhoto = async (
-  { id, ...photo }: Omit<photos, "created_at">,
-  tags: string[]
+  id: string,
+  photo: Prisma.photosUpdateInput,
+  tags?: string[]
 ): Promise<void> => {
-  const session = await auth();
-  if (!session) {
-    throw new Error("Not authenticated");
-  }
-
   await prisma.photos.update({
     where: {
       id,
@@ -20,14 +15,16 @@ export const updatePhoto = async (
     },
   });
 
-  await prisma.$transaction([
-    prisma.photos_tags.deleteMany({
-      where: {
-        photo_id: id,
-      },
-    }),
-    prisma.photos_tags.createMany({
-      data: tags.map((tag) => ({ photo_id: id, tag_value: tag })),
-    }),
-  ]);
+  if (tags) {
+    await prisma.$transaction([
+      prisma.photos_tags.deleteMany({
+        where: {
+          photo_id: id,
+        },
+      }),
+      prisma.photos_tags.createMany({
+        data: tags.map((tag) => ({ photo_id: id, tag_value: tag })),
+      }),
+    ]);
+  }
 };

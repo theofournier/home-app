@@ -3,8 +3,8 @@
 import { Button } from "@nextui-org/button";
 import NextImage from "next/image";
 import { ChangeEvent, useState } from "react";
-import { uploadPhoto } from "./uploadPhoto";
-import { compressPhoto } from "./compressPhoto";
+import { uploadPhoto } from "@/lib/utils/uploadPhoto";
+import { compressPhoto } from "@/lib/utils/compressPhoto";
 
 type StatusType = { success: boolean; reason?: string };
 
@@ -101,7 +101,7 @@ export const UploadPhotoForm = () => {
             success: compressResult.ok,
             reason: compressResult.reason,
           };
-          const photoResponse = await fetch("/api/photos/create", {
+          const photoResponse = await fetch("/api/photos", {
             method: "POST",
             body: JSON.stringify({
               url: originalResult.url,

@@ -10,6 +10,7 @@ import { pathForPhoto } from "@/config/path";
 import { useFormState, useFormStatus } from "react-dom";
 import { editPhotoAction } from "@/lib/actions/editPhotoAction";
 import { Select, SelectItem } from "@nextui-org/select";
+import { CompressPhoto } from "./CompressPhoto";
 
 type Props = {
   photo: Photo;
@@ -124,7 +125,7 @@ export const EditPhotoItem = ({ photo, tags }: Props) => {
             defaultValue={photo.height.toString()}
           />
         </div>
-        <div>
+        <div className="space-y-1">
           <SaveButton />
           {state.errorMessage && (
             <p className="text-danger">{state.errorMessage}</p>
@@ -132,6 +133,7 @@ export const EditPhotoItem = ({ photo, tags }: Props) => {
           {state.successMessage && (
             <p className="text-success">{state.successMessage}</p>
           )}
+          <CompressPhoto id={photo.id} url={photo.url} title={photo.title} />
         </div>
       </div>
     </form>

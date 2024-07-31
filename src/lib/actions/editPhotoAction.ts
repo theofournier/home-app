@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { updatePhoto } from "../services/queries/updatePhoto";
+import { auth } from "../auth/auth";
 
 const EditPhotoSchema = z.object({
   id: z.string(),
@@ -24,6 +25,10 @@ export const editPhotoAction = async (
   _prevState: { errorMessage: string; successMessage: string },
   formData: FormData
 ) => {
+  const session = await auth();
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
   try {
     const { tags, ...editPhotoFormData } = EditPhotoSchema.parse({
       id: formData.get("photoId"),
@@ -46,7 +51,7 @@ export const editPhotoAction = async (
     if (!editPhotoFormData.id) {
       return { errorMessage: "No photo id", successMessage: "" };
     }
-    await updatePhoto(editPhotoFormData, tags);
+    await updatePhoto(editPhotoFormData.id, editPhotoFormData, tags);
   } catch (error) {
     console.log(error);
     return { errorMessage: "Error editing photo", successMessage: "" };
