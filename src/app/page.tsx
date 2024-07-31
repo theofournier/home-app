@@ -17,7 +17,7 @@ export default async function Home() {
           fill
           sizes="100vw"
           alt={randomPhoto.title ?? randomPhoto.id}
-          src={randomPhoto.url}
+          src={randomPhoto.urlCompressed ?? randomPhoto.url}
           style={{
             objectFit: "cover",
           }}

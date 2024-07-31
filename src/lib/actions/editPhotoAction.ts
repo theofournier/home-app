@@ -6,6 +6,7 @@ import { updatePhoto } from "../services/queries/updatePhoto";
 const EditPhotoSchema = z.object({
   id: z.string(),
   url: z.string(),
+  url_compressed: z.string().nullable(),
   title: z.string().nullable(),
   description: z.string().nullable(),
   date: z.date().nullable(),
@@ -27,6 +28,7 @@ export const editPhotoAction = async (
     const { tags, ...editPhotoFormData } = EditPhotoSchema.parse({
       id: formData.get("photoId"),
       url: formData.get("url"),
+      url_compressed: formData.get("urlCompressed") || null,
       title: formData.get("title") || null,
       description: formData.get("description") || null,
       date: z.coerce.date().parse(formData.get("date")) || null,

@@ -2,18 +2,25 @@
 
 import { Button } from "@nextui-org/button";
 import NextImage from "next/image";
-import { ChangeEvent, FormEvent, useState } from "react";
-import {
-  uploadPhotoClientApi,
-  VERCEL_BLOB_SIZE_LIMIT,
-} from "@/lib/services/vercelBlob";
+import { ChangeEvent, useState } from "react";
+import { uploadPhoto } from "./uploadPhoto";
+import { compressPhoto } from "./compressPhoto";
+
+type StatusType = { success: boolean; reason?: string };
+
+type UploadStatus = {
+  photoName: string;
+  original?: StatusType;
+  compress?: StatusType;
+  database?: StatusType;
+};
 
 const UploadPhotoItem = ({
   photoFile,
   status,
 }: {
   photoFile: File;
-  status?: { success: boolean; reason?: string };
+  status?: StatusType;
 }) => {
   return (
     <div className="relative">
@@ -25,8 +32,8 @@ const UploadPhotoItem = ({
           aspectRatio: "1.5/1",
           marginInline: "auto",
         }}
-        width={200}
-        height={200 / 1.5}
+        width={400}
+        height={400 / 1.5}
       />
       {status?.success && (
         <div className="absolute top-0 h-full w-full bg-success/30" />
@@ -43,23 +50,29 @@ const UploadPhotoItem = ({
 export const UploadPhotoForm = () => {
   const [status, setStatus] = useState<{
     loading: boolean;
-    results: { success: boolean; photoName: string; reason?: string }[];
+    results: UploadStatus[];
   }>({
     loading: false,
     results: [],
   });
-  const [photoFiles, setPhotoFiles] = useState<File[]>([]);
+  const [photoFiles, setPhotoFiles] = useState<
+    { original: File; compress?: File }[]
+  >([]);
 
   const onChangePhotoFiles = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
-      setPhotoFiles(Array.from(files));
+      const photos = Array.from(files).map<{ original: File; compress?: File }>(
+        (file) => ({ original: file })
+      );
+      for (const photo of photos) {
+        photo.compress = await compressPhoto(photo.original);
+      }
+      setPhotoFiles(photos);
     }
   };
 
-  const onSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleUploadPhotos = async () => {
     if (photoFiles.length === 0) {
       return;
     }
@@ -68,28 +81,38 @@ export const UploadPhotoForm = () => {
 
     const results = await Promise.allSettled(
       photoFiles.map(async (photoFile) => {
-        if (photoFile.size >= VERCEL_BLOB_SIZE_LIMIT) {
-          const response = await uploadPhotoClientApi(photoFile);
-          const body = await response.json();
-          return {
-            photoName: photoFile.name,
-            ok: response.ok,
-            reason: body.error,
+        const result: UploadStatus = {
+          photoName: photoFile.original.name,
+        };
+        // Original
+        const originalResult = await uploadPhoto(photoFile.original);
+        result.original = {
+          success: originalResult.ok,
+          reason: originalResult.reason,
+        };
+
+        if (originalResult.ok) {
+          // Compress
+          const compressResult = await uploadPhoto(
+            photoFile.compress,
+            "compressed"
+          );
+          result.compress = {
+            success: compressResult.ok,
+            reason: compressResult.reason,
+          };
+          const photoResponse = await fetch("/api/photos/create", {
+            method: "POST",
+            body: JSON.stringify({
+              url: originalResult.url,
+              urlCompress: compressResult.url,
+            }),
+          });
+          result.database = {
+            success: photoResponse.ok,
           };
         }
-        const response = await fetch(
-          `/api/photos/upload?photoname=${photoFile.name}`,
-          {
-            method: "POST",
-            body: photoFile,
-          }
-        );
-        const body = await response.json();
-        return {
-          photoName: photoFile.name,
-          ok: response.ok,
-          reason: body.error,
-        };
+        return result;
       })
     );
 
@@ -99,38 +122,50 @@ export const UploadPhotoForm = () => {
         if (res.status === "rejected") {
           return { success: false, photoName: res.reason };
         }
-        return {
-          success: res.value.ok,
-          photoName: res.value.photoName,
-          reason: res.value.reason,
-        };
+        return res.value;
       }),
     });
   };
 
   return (
-    <form onSubmit={onSubmitForm}>
-      <input
-        name="photos"
-        type="file"
-        multiple
-        onChange={onChangePhotoFiles}
-        required
-      />
-      <Button type="submit" color="primary" isLoading={status.loading}>
-        Upload photos
-      </Button>
-      <div className="grid grid-cols-1 md:grid-cols-4">
+    <div>
+      <div>
+        <input type="file" multiple onChange={onChangePhotoFiles} />
+        <Button
+          type="button"
+          color="primary"
+          isLoading={status.loading}
+          onPress={handleUploadPhotos}
+          isDisabled={photoFiles.length === 0}
+        >
+          Upload photos
+        </Button>
+      </div>
+      <h3>Photos</h3>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
         {photoFiles.map((photoFile) => (
-          <UploadPhotoItem
-            key={photoFile.name}
-            photoFile={photoFile}
-            status={status.results.find(
-              (res) => res.photoName === photoFile.name
+          <div key={photoFile.original.name}>
+            <UploadPhotoItem
+              photoFile={photoFile.original}
+              status={
+                status.results.find(
+                  (res) => res.photoName === photoFile.original.name
+                )?.original
+              }
+            />
+            {photoFile.compress && (
+              <UploadPhotoItem
+                photoFile={photoFile.compress}
+                status={
+                  status.results.find(
+                    (res) => res.photoName === photoFile.compress!.name
+                  )?.compress
+                }
+              />
             )}
-          />
+          </div>
         ))}
       </div>
-    </form>
+    </div>
   );
 };

@@ -1,7 +1,5 @@
 import { auth } from "@/lib/auth/auth";
-import { createPhotos } from "@/lib/services/queries/createPhotos";
 import { uploadPhotoServer } from "@/lib/services/vercelBlob";
-import { nanoid } from "nanoid";
 import { NextAuthRequest } from "next-auth/lib";
 import { NextResponse } from "next/server";
 
@@ -14,7 +12,6 @@ export const POST = auth(
     const { searchParams } = new URL(request.url);
     const photoName = searchParams.get("photoname");
 
-    // From server
     if (!photoName) {
       return NextResponse.json(
         { error: "No photo filename in query", photoName },
@@ -31,14 +28,6 @@ export const POST = auth(
     try {
       const result = await uploadPhotoServer(photoName, request.body);
 
-      await createPhotos([
-        {
-          id: nanoid(15),
-          url: result.blobResult.url,
-          height: 0,
-          width: 0,
-        },
-      ]);
       return NextResponse.json(result);
     } catch (error) {
       return NextResponse.json(

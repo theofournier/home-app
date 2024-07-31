@@ -10,13 +10,16 @@ type PhotoItemProps = {
 const PhotoItem = ({ photo }: PhotoItemProps) => {
   return (
     <div>
-      <NextLink href={pathForPhoto(photo)} className="active:brightness-75 flex justify-center">
+      <NextLink
+        href={pathForPhoto(photo)}
+        className="active:brightness-75 flex justify-center"
+      >
         <NextImage
           alt={photo.title ?? photo.id}
-          src={photo.url}
+          src={photo.urlCompressed ?? photo.url}
           style={{ objectFit: "cover" }}
-          width={300}
-          height={300 / 1.5}
+          width={400}
+          height={400 / 1.5}
         />
       </NextLink>
       <div className="mx-2">

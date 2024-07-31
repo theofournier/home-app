@@ -10,6 +10,11 @@ export type UploadPhotoResult = {
   blobResult: PutBlobResult;
 };
 
+export type UploadPhotoResponse = Partial<UploadPhotoResult> & {
+  photoName: string;
+  error?: string;
+};
+
 export const uploadPhotoServer = async (
   photoName: string,
   photo: ReadableStream<Uint8Array>
@@ -25,9 +30,12 @@ export const uploadPhotoServer = async (
   return { photoName, blobResult: result };
 };
 
-const uploadPhotoClient = async (photo: File): Promise<UploadPhotoResult> => {
+const uploadPhotoClient = async (
+  photo: File,
+  photoName?: string
+): Promise<UploadPhotoResult> => {
   const result = await upload(
-    `${VERCEL_BLOB_PHOTO_FOLDER_PATH}/${photo.name}`,
+    `${VERCEL_BLOB_PHOTO_FOLDER_PATH}/${photoName ?? photo.name}`,
     photo,
     {
       access: "public",
@@ -38,9 +46,9 @@ const uploadPhotoClient = async (photo: File): Promise<UploadPhotoResult> => {
   return { photoName: photo.name, blobResult: result };
 };
 
-export const uploadPhotoClientApi = async (photo: File) => {
+export const uploadPhotoClientApi = async (photo: File, photoName?: string) => {
   try {
-    const result = await uploadPhotoClient(photo);
+    const result = await uploadPhotoClient(photo, photoName);
 
     return NextResponse.json(result);
   } catch (error) {

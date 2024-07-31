@@ -43,13 +43,18 @@ export const EditPhotoItem = ({ photo, tags }: Props) => {
           >
             <NextImage
               alt={photo.title ?? photo.id}
-              src={photo.url}
+              src={photo.urlCompressed ?? photo.url}
               style={{ objectFit: "cover", aspectRatio: "1.5/1" }}
               width={200}
               height={200 / 1.5}
             />
           </NextLink>
           <Input name="url" label="URL" defaultValue={photo.url} />
+          <Input
+            name="urlCompressed"
+            label="URL Compressed"
+            defaultValue={photo.urlCompressed}
+          />
         </div>
         <div className="space-y-1">
           <Input name="title" label="Title" defaultValue={photo.title} />

@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-        "ngrok": "ngrok http 3000",
+		"ngrok": "ngrok http 3000",
 		"build": "next build",
 		"vercel-build": "prisma generate && next build",
 		"start": "next start",
@@ -26,6 +26,7 @@
 		"@react-aria/visually-hidden": "3.8.12",
 		"@tabler/icons-react": "3.11.0",
 		"@vercel/blob": "^0.23.4",
+		"browser-image-compression": "^2.0.2",
 		"clsx": "2.1.1",
 		"framer-motion": "~11.3.6",
 		"intl-messageformat": "10.5.14",

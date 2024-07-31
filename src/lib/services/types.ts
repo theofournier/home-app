@@ -7,6 +7,7 @@ export type PhotoTagsDB = photos & {
 export interface Photo {
   id: string;
   url: string;
+  urlCompressed?: string;
   height: number;
   width: number;
   title?: string;
@@ -41,6 +42,7 @@ export const mapPhotoTagsDB = (photoTagsDB: PhotoTagsDB): Photo => {
 export const mapPhotoDB = (photoDB: photos): Photo => ({
   id: photoDB.id,
   url: photoDB.url,
+  urlCompressed: photoDB.url_compressed ?? undefined,
   height: photoDB.height,
   width: photoDB.width,
   title: photoDB.title ?? undefined,

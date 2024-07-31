@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
@@ -10,20 +10,21 @@ datasource db {
 }
 
 model photos {
-  id           String        @id @db.VarChar(255)
-  url          String
-  height       Int
-  width        Int
-  title        String?
-  description  String?
-  location     String?
-  date         DateTime?     @db.Timestamptz(6)
-  exposure     String?
-  focal_length Int?
-  f_number     Int?
-  iso          Int?
-  created_at   DateTime      @default(now()) @db.Timestamptz(6)
-  photos_tags  photos_tags[]
+  id             String        @id @db.VarChar(255)
+  url            String
+  url_compressed String?
+  height         Int
+  width          Int
+  title          String?
+  description    String?
+  location       String?
+  date           DateTime?     @db.Timestamptz(6)
+  exposure       String?
+  focal_length   Int?
+  f_number       Int?
+  iso            Int?
+  created_at     DateTime      @default(now()) @db.Timestamptz(6)
+  photos_tags    photos_tags[]
 }
 
 model photos_tags {

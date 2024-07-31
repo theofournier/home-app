@@ -22,9 +22,7 @@ export const POST = auth(
           };
         },
         onUploadCompleted: async ({ blob }) => {
-          await createPhotos([
-            { id: nanoid(15), url: blob.url, height: 0, width: 0 },
-          ]);
+          console.log("Upload completed", blob.pathname);
         },
       });
 

@@ -44,7 +44,7 @@ export default async function Photo({ params: { id } }: Props) {
           >
             <NextImage
               alt={photo.title ?? photo.id}
-              src={photo.url}
+              src={photo.urlCompressed ?? photo.url}
               style={{
                 objectFit: "contain",
               }}
