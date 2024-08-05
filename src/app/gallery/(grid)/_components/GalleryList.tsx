@@ -23,12 +23,18 @@ const PhotoItem = ({ photo }: PhotoItemProps) => {
         />
       </NextLink>
       <div className="mx-2">
-        <h3 className="text-xl">{photo.title}</h3>
+        <h3 className="text-lg">{photo.title}</h3>
         <div className="flex flex-row gap-2">
-          <span>{photo.location}</span>
-          {photo.date && <span>· {new Date(photo.date).toDateString()}</span>}
+          <span className="text-sm">{photo.location}</span>
+          {photo.date && (
+            <span className="text-sm">
+              · {new Date(photo.date).toDateString()}
+            </span>
+          )}
         </div>
-        <p>{photo?.tags?.map((tag) => tag.title).join(" · ")}</p>
+        <p className="text-sm">
+          {photo?.tags?.map((tag) => tag.title).join(" · ")}
+        </p>
       </div>
     </div>
   );

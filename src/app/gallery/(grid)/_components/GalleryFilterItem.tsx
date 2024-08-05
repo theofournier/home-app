@@ -67,6 +67,7 @@ export const GalleryFilterItem = ({ category, value, title }: Props) => {
         startContent={selected ? <IconCheck /> : undefined}
         type="button"
         onPress={onPress}
+        variant={selected ? "solid" : "bordered"}
       >
         {title ?? value}
       </Button>

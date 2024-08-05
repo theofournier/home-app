@@ -55,7 +55,7 @@ export default async function Photo({ params: { id } }: Props) {
         </div>
       </div>
       <div className="col-span-1 px-2 md:p-0">
-        <div className="grid grid-cols-2 md:grid-cols-1 gap-x-1 gap-y-4 md:sticky md:top-16">
+        <div className="grid grid-cols-2 md:grid-cols-1 gap-x-1 gap-y-4 md:sticky md:top-0">
           <div className="space-y-4">
             <div>
               <h1 className="text-lg font-bold">{photo.title}</h1>
@@ -72,10 +72,12 @@ export default async function Photo({ params: { id } }: Props) {
           </div>
           <div className="space-y-4">
             <ul>
-              <li>{photo.exifData?.focalLength}mm</li>
-              <li>ƒ/{photo.exifData?.fNumber}</li>
-              <li>{photo.exifData?.exposure}s</li>
-              <li>ISO {photo.exifData?.iso}</li>
+              {photo.exifData?.focalLength && (
+                <li>{photo.exifData?.focalLength}mm</li>
+              )}
+              {photo.exifData?.fNumber && <li>ƒ/{photo.exifData?.fNumber}</li>}
+              {photo.exifData?.exposure && <li>{photo.exifData?.exposure}s</li>}
+              {photo.exifData?.iso && <li>ISO {photo.exifData?.iso}</li>}
               <li>
                 {photo.width} x {photo.height}
               </li>

@@ -18,8 +18,12 @@ export default async function AdminGallery() {
     <div className="space-y-2">
       <div className="flex flex-row items-center gap-4 px-2 md:px-4">
         <h1 className="text-lg font-semibold">Admin gallery</h1>
-        <Button startContent={<IconUpload />}>
-          <NextLink href={PATH_ADMIN_GALLERY_UPLOAD}>Upload photos</NextLink>
+        <Button
+          startContent={<IconUpload />}
+          as={NextLink}
+          href={PATH_ADMIN_GALLERY_UPLOAD}
+        >
+          Upload photos
         </Button>
       </div>
       <div className="divide-y">

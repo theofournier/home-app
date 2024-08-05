@@ -1,6 +1,5 @@
 import { TablerIcon } from "@tabler/icons-react";
 import { GalleryFilterItem } from "./GalleryFilterItem";
-import { ReactNode } from "react";
 
 type Props = {
   title: string;
@@ -19,7 +18,7 @@ export const GalleryFilter = async ({
     <div className="space-y-1 space-x-1 flex flex-row md:flex-col items-center md:items-start overflow-x-auto no-scrollbar">
       <div className="flex flex-row gap-1 mr-2 md:mb-2 uppercase items-center">
         <Icon size="1.2rem" />
-        <h3>{title}</h3>
+        <h3 className="text-sm md:text-medium">{title}</h3>
       </div>
       {values.map((value) => (
         <GalleryFilterItem

@@ -49,7 +49,7 @@ export const Navbar = async () => {
   );
 
   return (
-    <NextUINavbar maxWidth="full" position="sticky">
+    <NextUINavbar maxWidth="full" position="static">
       <NavbarContent justify="start">
         <ul className="flex gap-4 justify-start mx-2">
           {siteConfig.navItems.map((item) => (

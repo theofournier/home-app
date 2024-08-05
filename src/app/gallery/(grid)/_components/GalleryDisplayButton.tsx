@@ -18,10 +18,10 @@ export const GalleryDisplayButton = ({ display }: Props) => {
       isIconOnly
       variant={selected ? "solid" : "bordered"}
       color={selected ? "primary" : "default"}
+      as={NextLink}
+      href={`${PATH_GALLERY}?display=${display}`}
     >
-      <NextLink href={`${PATH_GALLERY}?display=${display}`}>
-        {children}
-      </NextLink>
+      {children}
     </Button>
   );
 
