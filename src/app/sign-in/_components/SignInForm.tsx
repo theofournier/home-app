@@ -1,6 +1,6 @@
 "use client";
 
-import { PasswordInput } from "@/components/PasswordInput";
+import { PasswordInput } from "./PasswordInput";
 import { signInAction } from "@/lib/actions/auth";
 import { KEY_CALLBACK_URL } from "@/lib/auth/auth";
 import { Button } from "@nextui-org/button";

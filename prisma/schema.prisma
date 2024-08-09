@@ -10,20 +10,21 @@ datasource db {
 }
 
 model photos {
-  id             String        @id @db.VarChar(255)
+  id             String          @id @db.VarChar(255)
   url            String
-  url_compressed String?
   height         Int
   width          Int
   title          String?
   description    String?
   location       String?
-  date           DateTime?     @db.Timestamptz(6)
+  date           DateTime?       @db.Timestamptz(6)
   exposure       String?
   focal_length   Int?
   f_number       Int?
   iso            Int?
-  created_at     DateTime      @default(now()) @db.Timestamptz(6)
+  created_at     DateTime        @default(now()) @db.Timestamptz(6)
+  url_compressed String?
+  photos_albums  photos_albums[]
   photos_tags    photos_tags[]
 }
 
@@ -41,4 +42,23 @@ model tags {
   title       String?
   description String?
   photos_tags photos_tags[]
+}
+
+model albums {
+  id            String          @id @db.VarChar(255)
+  title         String
+  description   String?
+  date          DateTime?       @db.Timestamptz(6)
+  created_at    DateTime        @default(now()) @db.Timestamptz(6)
+  cover_url     String?
+  photos_albums photos_albums[]
+}
+
+model photos_albums {
+  photo_id String @db.VarChar(255)
+  album_id String @db.VarChar(255)
+  albums   albums @relation(fields: [album_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  photos   photos @relation(fields: [photo_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([photo_id, album_id])
 }

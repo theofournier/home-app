@@ -1,7 +1,17 @@
-import { photos, photos_tags, tags } from "@prisma/client";
+import {
+  photos,
+  photos_tags,
+  tags,
+  albums,
+  photos_albums,
+} from "@prisma/client";
 
 export type PhotoTagsDB = photos & {
   photos_tags: (photos_tags & { tags: tags })[];
+};
+
+export type AlbumPhotosDB = albums & {
+  photos_albums: (photos_albums & { photos: PhotoTagsDB })[];
 };
 
 export interface Photo {
@@ -30,6 +40,16 @@ export interface Tag {
   value: string;
   title?: string;
   description?: string;
+}
+
+export interface Album {
+  id: string;
+  title: string;
+  description?: string;
+  coverUrl?: string;
+  date?: Date;
+  photos?: Photo[];
+  createdAt: Date;
 }
 
 export const mapPhotoTagsDB = (photoTagsDB: PhotoTagsDB): Photo => {
@@ -62,4 +82,20 @@ export const mapTagDB = (tagDB: tags): Tag => ({
   value: tagDB.value,
   title: tagDB.title ?? undefined,
   description: tagDB.description ?? undefined,
+});
+
+export const mapAlbumDB = (albumDB: albums): Album => ({
+  id: albumDB.id,
+  title: albumDB.title,
+  description: albumDB.description ?? undefined,
+  coverUrl: albumDB.cover_url ?? undefined,
+  date: albumDB.date ?? undefined,
+  createdAt: albumDB.created_at,
+});
+
+export const mapAlbumPhotosDB = (albumPhotosDB: AlbumPhotosDB): Album => ({
+  ...mapAlbumDB(albumPhotosDB),
+  photos: albumPhotosDB.photos_albums?.map((photoAlbum) =>
+    mapPhotoTagsDB(photoAlbum.photos)
+  ),
 });

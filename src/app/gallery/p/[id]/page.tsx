@@ -82,7 +82,7 @@ export default async function Photo({ params: { id } }: Props) {
                 {photo.width} x {photo.height}
               </li>
             </ul>
-            {photo.date && <p>{new Date(photo.date).toDateString()}</p>}
+            {photo.date && <p>{photo.date.toDateString()}</p>}
           </div>
         </div>
       </div>
