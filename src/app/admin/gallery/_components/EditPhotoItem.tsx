@@ -3,8 +3,8 @@
 import NextImage from "next/image";
 import NextLink from "next/link";
 
-import { Photo, Tag } from "@/lib/services/types";
-import { Input } from "@nextui-org/input";
+import { Album, Photo, Tag } from "@/lib/services/types";
+import { Input, Textarea } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { pathForPhoto } from "@/config/path";
 import { useFormState, useFormStatus } from "react-dom";
@@ -16,6 +16,7 @@ import { DeletePhoto } from "./DeletePhoto";
 type Props = {
   photo: Photo;
   tags: Tag[];
+  albums: Album[];
 };
 
 const SaveButton = () => {
@@ -28,7 +29,7 @@ const SaveButton = () => {
   );
 };
 
-export const EditPhotoItem = ({ photo, tags }: Props) => {
+export const EditPhotoItem = ({ photo, tags, albums }: Props) => {
   const [state, formAction] = useFormState(editPhotoAction, {
     errorMessage: "",
     successMessage: "",
@@ -60,7 +61,7 @@ export const EditPhotoItem = ({ photo, tags }: Props) => {
         </div>
         <div className="space-y-1">
           <Input name="title" label="Title" defaultValue={photo.title} />
-          <Input
+          <Textarea
             name="description"
             label="Description"
             defaultValue={photo.description}
@@ -88,6 +89,20 @@ export const EditPhotoItem = ({ photo, tags }: Props) => {
             {tags.map((tag) => (
               <SelectItem key={tag.value} value={tag.value}>
                 {tag.title ?? tag.value}
+              </SelectItem>
+            ))}
+          </Select>
+          <Select
+            name="albums"
+            label="Albums"
+            placeholder="Select albums"
+            selectionMode="multiple"
+            className="max-w-xs"
+            defaultSelectedKeys={photo.albums?.map((album) => album.id)}
+          >
+            {albums.map((album) => (
+              <SelectItem key={album.id} value={album.id}>
+                {album.title}
               </SelectItem>
             ))}
           </Select>

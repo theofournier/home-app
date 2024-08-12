@@ -1,4 +1,4 @@
-import { mapPhotoTagsDB, Photo } from "../types";
+import { mapPhotoFullDB, Photo } from "../types";
 import { cache } from "react";
 import prisma from "../prisma";
 
@@ -10,6 +10,11 @@ export const getPhoto = cache(
           photos_tags: {
             include: { tags: true },
           },
+          photos_albums: {
+            include: {
+              albums: true,
+            },
+          },
         },
         where: {
           id,
@@ -20,7 +25,7 @@ export const getPhoto = cache(
         return undefined;
       }
 
-      return mapPhotoTagsDB(photoDB);
+      return mapPhotoFullDB(photoDB);
     } catch (error) {
       console.log(`Error fetching photo id ${id}: ${error}`);
       return undefined;

@@ -3,8 +3,13 @@ import NextLink from "next/link";
 
 import { getPhoto } from "@/lib/services/queries/getPhoto";
 import { notFound } from "next/navigation";
-import { IconBuilding, IconTagFilled } from "@tabler/icons-react";
+import {
+  IconBuilding,
+  IconLibraryPhoto,
+  IconTagFilled,
+} from "@tabler/icons-react";
 import { Metadata, ResolvingMetadata } from "next";
+import { pathForAlbum } from "@/config/path";
 
 type Props = {
   params: { id: string };
@@ -69,6 +74,18 @@ export default async function Photo({ params: { id } }: Props) {
               <IconTagFilled size="1.1rem" />
               <p>{photo.tags?.map((tag) => tag.title).join(" · ")}</p>
             </div>
+            {photo.albums && photo.albums?.length > 0 && (
+              <div className="flex flex-row items-center gap-2">
+                <IconLibraryPhoto size="1.1rem" />
+                <div className="flex flex-col items-start">
+                  {photo.albums.map((album) => (
+                    <NextLink key={album.id} href={pathForAlbum(album)}>
+                      {album.title}
+                    </NextLink>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           <div className="space-y-4">
             <ul>

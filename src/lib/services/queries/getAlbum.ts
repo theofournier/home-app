@@ -1,4 +1,4 @@
-import { Album, mapAlbumDB, mapAlbumPhotosDB } from "../types";
+import { Album, mapAlbumFullDB } from "../types";
 import { cache } from "react";
 import prisma from "../prisma";
 
@@ -30,7 +30,7 @@ export const getAlbum = cache(
         return undefined;
       }
 
-      return mapAlbumPhotosDB(albumDB);
+      return mapAlbumFullDB(albumDB);
     } catch (error) {
       console.log(`Error fetching album id ${id}: ${error}`);
       return undefined;

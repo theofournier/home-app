@@ -19,6 +19,7 @@ const EditPhotoSchema = z.object({
   width: z.number(),
   height: z.number(),
   tags: z.string().array(),
+  albums: z.string().array(),
 });
 
 export const editPhotoAction = async (
@@ -30,13 +31,15 @@ export const editPhotoAction = async (
     throw new Error("Not authenticated");
   }
   try {
-    const { tags, ...editPhotoFormData } = EditPhotoSchema.parse({
+    const { tags, albums, ...editPhotoFormData } = EditPhotoSchema.parse({
       id: formData.get("photoId"),
       url: formData.get("url"),
       url_compressed: formData.get("urlCompressed") || null,
       title: formData.get("title") || null,
       description: formData.get("description") || null,
-      date: z.coerce.date().parse(formData.get("date")) || null,
+      date: formData.get("date")
+        ? z.coerce.date().parse(formData.get("date"))
+        : null,
       location: formData.get("location") || null,
       exposure: formData.get("exposure") || null,
       focal_length:
@@ -46,12 +49,13 @@ export const editPhotoAction = async (
       width: z.coerce.number().parse(formData.get("width")),
       height: z.coerce.number().parse(formData.get("height")),
       tags: formData.getAll("tags"),
+      albums: formData.getAll("albums"),
     });
 
     if (!editPhotoFormData.id) {
       return { errorMessage: "No photo id", successMessage: "" };
     }
-    await updatePhoto(editPhotoFormData.id, editPhotoFormData, tags);
+    await updatePhoto(editPhotoFormData.id, editPhotoFormData, tags, albums);
   } catch (error) {
     console.log(error);
     return { errorMessage: "Error editing photo", successMessage: "" };

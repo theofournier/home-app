@@ -1,4 +1,4 @@
-import { mapPhotoTagsDB, Photo } from "../types";
+import { mapPhotoFullDB, Photo } from "../types";
 import { cache } from "react";
 import prisma from "../prisma";
 
@@ -24,6 +24,11 @@ export const getPhotos = cache(
               tags: true,
             },
           },
+          photos_albums: {
+            include: {
+              albums: true,
+            },
+          },
         },
         where: {
           title: {
@@ -47,7 +52,8 @@ export const getPhotos = cache(
         orderBy: [{ [sort]: "desc" }],
       });
 
-      const photos: Photo[] = photosDB.map(mapPhotoTagsDB);
+
+      const photos: Photo[] = photosDB.map(mapPhotoFullDB);
 
       return photos;
     } catch (error) {

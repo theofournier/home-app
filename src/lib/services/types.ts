@@ -6,12 +6,13 @@ import {
   photos_albums,
 } from "@prisma/client";
 
-export type PhotoTagsDB = photos & {
-  photos_tags: (photos_tags & { tags: tags })[];
+export type PhotoFullDB = photos & {
+  photos_tags?: (photos_tags & { tags: tags })[];
+  photos_albums?: (photos_albums & { albums: albums })[];
 };
 
-export type AlbumPhotosDB = albums & {
-  photos_albums: (photos_albums & { photos: PhotoTagsDB })[];
+export type AlbumFullDB = albums & {
+  photos_albums?: (photos_albums & { photos: PhotoFullDB })[];
 };
 
 export interface Photo {
@@ -26,6 +27,7 @@ export interface Photo {
   exifData?: ExifData;
   date?: Date;
   tags?: Tag[];
+  albums?: Album[];
   createdAt: Date;
 }
 
@@ -51,13 +53,6 @@ export interface Album {
   photos?: Photo[];
   createdAt: Date;
 }
-
-export const mapPhotoTagsDB = (photoTagsDB: PhotoTagsDB): Photo => {
-  return {
-    ...mapPhotoDB(photoTagsDB),
-    tags: photoTagsDB.photos_tags?.map((photoTag) => mapTagDB(photoTag.tags)),
-  };
-};
 
 export const mapPhotoDB = (photoDB: photos): Photo => ({
   id: photoDB.id,
@@ -93,9 +88,19 @@ export const mapAlbumDB = (albumDB: albums): Album => ({
   createdAt: albumDB.created_at,
 });
 
-export const mapAlbumPhotosDB = (albumPhotosDB: AlbumPhotosDB): Album => ({
-  ...mapAlbumDB(albumPhotosDB),
-  photos: albumPhotosDB.photos_albums?.map((photoAlbum) =>
-    mapPhotoTagsDB(photoAlbum.photos)
+export const mapPhotoFullDB = (photoFullDB: PhotoFullDB): Photo => {
+  return {
+    ...mapPhotoDB(photoFullDB),
+    tags: photoFullDB.photos_tags?.map((photoTag) => mapTagDB(photoTag.tags)),
+    albums: photoFullDB.photos_albums?.map((photoAlbum) =>
+      mapAlbumDB(photoAlbum.albums)
+    ),
+  };
+};
+
+export const mapAlbumFullDB = (albumFullDB: AlbumFullDB): Album => ({
+  ...mapAlbumDB(albumFullDB),
+  photos: albumFullDB.photos_albums?.map((photoAlbum) =>
+    mapPhotoFullDB(photoAlbum.photos)
   ),
 });

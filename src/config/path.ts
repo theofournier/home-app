@@ -7,6 +7,7 @@ export const PATH_SIGN_IN = "/sign-in";
 export const PATH_ADMIN = "/admin";
 export const PATH_ADMIN_GALLERY = `${PATH_ADMIN}/gallery`;
 export const PATH_ADMIN_GALLERY_UPLOAD = `${PATH_ADMIN_GALLERY}/upload`;
+export const PATH_ADMIN_GALLERY_ALBUMS = `${PATH_ADMIN_GALLERY}/albums`;
 
 export const PREFIX_PHOTO = `${PATH_GALLERY}/p`;
 
