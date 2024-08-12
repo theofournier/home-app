@@ -1,7 +1,5 @@
 import { auth } from "@/lib/auth/auth";
-import { createPhotos } from "@/lib/services/queries/createPhotos";
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
-import { nanoid } from "nanoid";
 import { NextAuthRequest } from "next-auth/lib";
 import { NextResponse } from "next/server";
 

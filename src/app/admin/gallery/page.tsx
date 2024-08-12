@@ -1,6 +1,6 @@
-import { getPhotos } from "@/lib/services/queries/getPhotos";
+import { getPhotos } from "@/lib/services/queries/photo/getPhotos";
 import { EditPhotoItem } from "./_components/EditPhotoItem";
-import { getTags } from "@/lib/services/queries/getTags";
+import { getTags } from "@/lib/services/queries/tag/getTags";
 import NextLink from "next/link";
 import {
   PATH_ADMIN_GALLERY,
@@ -10,7 +10,7 @@ import {
 import { Metadata } from "next";
 import { Button } from "@nextui-org/button";
 import { IconLibraryPhoto, IconUpload } from "@tabler/icons-react";
-import { getAlbums } from "@/lib/services/queries/getAlbums";
+import { getAlbums } from "@/lib/services/queries/album/getAlbums";
 
 export const metadata: Metadata = {
   title: "Admin - Gallery",

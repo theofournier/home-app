@@ -1,5 +1,5 @@
 import { Metadata, ResolvingMetadata } from "next";
-import { getAlbum } from "@/lib/services/queries/getAlbum";
+import { getAlbum } from "@/lib/services/queries/album/getAlbum";
 import { notFound } from "next/navigation";
 import { NextPageProps } from "@/lib/types";
 import { GalleryGrid } from "@/components/gallery/GalleryGrid";

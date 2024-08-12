@@ -1,8 +1,8 @@
 "use server";
 
 import { z } from "zod";
-import { auth } from "../auth/auth";
-import { updateAlbum } from "../services/queries/updateAlbum";
+import { auth } from "../../auth/auth";
+import { updateAlbum } from "../../services/queries/album/updateAlbum";
 
 const EditAlbumSchema = z.object({
   id: z.string(),

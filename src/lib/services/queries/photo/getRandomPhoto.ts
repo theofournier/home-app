@@ -1,6 +1,6 @@
-import { mapPhotoDB, Photo } from "../types";
+import { mapPhotoDB, Photo } from "../../types";
 import { cache } from "react";
-import prisma from "../prisma";
+import prisma from "../../prisma";
 
 export const getRandomPhoto = cache(async (): Promise<Photo | undefined> => {
   try {

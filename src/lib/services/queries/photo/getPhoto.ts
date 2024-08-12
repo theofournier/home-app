@@ -1,6 +1,6 @@
-import { mapPhotoFullDB, Photo } from "../types";
+import { mapPhotoFullDB, Photo } from "../../types";
 import { cache } from "react";
-import prisma from "../prisma";
+import prisma from "../../prisma";
 
 export const getPhoto = cache(
   async (id: string): Promise<Photo | undefined> => {

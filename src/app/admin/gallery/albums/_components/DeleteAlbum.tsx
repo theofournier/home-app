@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteAlbumAction } from "@/lib/actions/deleteAlbumAction";
+import { deleteAlbumAction } from "@/lib/actions/album/deleteAlbumAction";
 import { Button } from "@nextui-org/button";
 import { useFormState } from "react-dom";
 

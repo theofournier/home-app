@@ -1,8 +1,8 @@
 "use server";
 
 import { z } from "zod";
-import { auth } from "../auth/auth";
-import { deleteAlbum } from "../services/queries/deleteAlbum";
+import { auth } from "../../auth/auth";
+import { deleteAlbum } from "../../services/queries/album/deleteAlbum";
 
 const DeleteAlbumSchema = z.object({
   id: z.string(),

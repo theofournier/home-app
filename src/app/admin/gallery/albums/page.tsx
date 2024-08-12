@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getAlbums } from "@/lib/services/queries/getAlbums";
+import { getAlbums } from "@/lib/services/queries/album/getAlbums";
 import { EditAlbumItem } from "./_components/EditAlbumItem";
 import { Button } from "@nextui-org/button";
 import NextLink from "next/link";

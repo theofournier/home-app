@@ -1,9 +1,9 @@
 "use server";
 
 import { z } from "zod";
-import { auth } from "../auth/auth";
-import { deletePhoto } from "../services/queries/deletePhoto";
-import { deletePhotoServer } from "../services/vercelBlob";
+import { auth } from "../../auth/auth";
+import { deletePhoto } from "../../services/queries/photo/deletePhoto";
+import { deletePhotoServer } from "../../services/vercelBlob";
 
 const DeletePhotoSchema = z.object({
   id: z.string(),

@@ -1,9 +1,8 @@
 "use server";
 
 import { z } from "zod";
-import { auth } from "../auth/auth";
-import { updateAlbum } from "../services/queries/updateAlbum";
-import { createAlbum } from "../services/queries/createAlbum";
+import { auth } from "../../auth/auth";
+import { createAlbum } from "../../services/queries/album/createAlbum";
 import { nanoid } from "nanoid";
 
 const CreateAlbumSchema = z.object({

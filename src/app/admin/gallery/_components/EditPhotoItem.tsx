@@ -8,7 +8,7 @@ import { Input, Textarea } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { pathForPhoto } from "@/config/path";
 import { useFormState, useFormStatus } from "react-dom";
-import { editPhotoAction } from "@/lib/actions/editPhotoAction";
+import { editPhotoAction } from "@/lib/actions/photo/editPhotoAction";
 import { Select, SelectItem } from "@nextui-org/select";
 import { CompressPhoto } from "./CompressPhoto";
 import { DeletePhoto } from "./DeletePhoto";

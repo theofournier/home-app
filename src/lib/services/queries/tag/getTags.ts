@@ -1,6 +1,6 @@
-import { mapTagDB, Tag } from "../types";
+import { mapTagDB, Tag } from "../../types";
 import { cache } from "react";
-import prisma from "../prisma";
+import prisma from "../../prisma";
 
 export const getTags = cache(async (): Promise<Tag[]> => {
   try {

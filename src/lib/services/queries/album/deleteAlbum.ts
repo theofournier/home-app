@@ -1,4 +1,4 @@
-import prisma from "../prisma";
+import prisma from "../../prisma";
 
 export const deleteAlbum = async (id: string) => {
   return await prisma.albums.delete({

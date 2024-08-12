@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { KEY_CALLBACK_URL, signIn } from "../auth/auth";
+import { KEY_CALLBACK_URL, signIn } from "../../auth/auth";
 import { PATH_ADMIN } from "@/config/path";
 
 export const signInAction = async (

@@ -9,7 +9,7 @@ import { Button } from "@nextui-org/button";
 import { pathForAlbum } from "@/config/path";
 import { useFormState, useFormStatus } from "react-dom";
 import { DeleteAlbum } from "./DeleteAlbum";
-import { editAlbumAction } from "@/lib/actions/editAlbumAction";
+import { editAlbumAction } from "@/lib/actions/album/editAlbumAction";
 
 type Props = {
   album: Album;

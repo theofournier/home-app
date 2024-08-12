@@ -2,7 +2,7 @@
 
 import { Button } from "@nextui-org/button";
 import { useFormState } from "react-dom";
-import { deletePhotoAction } from "@/lib/actions/deletePhotoAction";
+import { deletePhotoAction } from "@/lib/actions/photo/deletePhotoAction";
 
 type Props = {
   id: string;

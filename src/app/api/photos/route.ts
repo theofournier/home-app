@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth/auth";
-import { createPhotos } from "@/lib/services/queries/createPhotos";
+import { createPhotos } from "@/lib/services/queries/photo/createPhotos";
 import { nanoid } from "nanoid";
 import { NextAuthRequest } from "next-auth/lib";
 import { NextResponse } from "next/server";

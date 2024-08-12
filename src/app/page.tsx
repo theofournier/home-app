@@ -1,5 +1,5 @@
 import { pathForPhoto } from "@/config/path";
-import { getRandomPhoto } from "@/lib/services/queries/getRandomPhoto";
+import { getRandomPhoto } from "@/lib/services/queries/photo/getRandomPhoto";
 import NextImage from "next/image";
 import NextLink from "next/link";
 

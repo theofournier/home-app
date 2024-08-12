@@ -1,6 +1,6 @@
 import { NextPageProps } from "@/lib/types";
 import { Metadata } from "next";
-import { getAlbums } from "@/lib/services/queries/getAlbums";
+import { getAlbums } from "@/lib/services/queries/album/getAlbums";
 import { AlbumItem } from "./_components/AlbumItem";
 
 type Props = {

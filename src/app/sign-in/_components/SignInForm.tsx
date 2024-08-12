@@ -1,7 +1,7 @@
 "use client";
 
 import { PasswordInput } from "./PasswordInput";
-import { signInAction } from "@/lib/actions/auth";
+import { signInAction } from "@/lib/actions/auth/auth";
 import { KEY_CALLBACK_URL } from "@/lib/auth/auth";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";

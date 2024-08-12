@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth/auth";
-import { updatePhoto } from "@/lib/services/queries/updatePhoto";
+import { updatePhoto } from "@/lib/services/queries/photo/updatePhoto";
 import { NextAuthRequest } from "next-auth/lib";
 import { NextResponse } from "next/server";
 

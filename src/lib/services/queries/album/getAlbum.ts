@@ -1,6 +1,6 @@
-import { Album, mapAlbumFullDB } from "../types";
+import { Album, mapAlbumFullDB } from "../../types";
 import { cache } from "react";
-import prisma from "../prisma";
+import prisma from "../../prisma";
 
 export const getAlbum = cache(
   async (id: string): Promise<Album | undefined> => {

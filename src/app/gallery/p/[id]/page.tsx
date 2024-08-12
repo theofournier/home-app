@@ -1,7 +1,7 @@
 import NextImage from "next/image";
 import NextLink from "next/link";
 
-import { getPhoto } from "@/lib/services/queries/getPhoto";
+import { getPhoto } from "@/lib/services/queries/photo/getPhoto";
 import { notFound } from "next/navigation";
 import {
   IconBuilding,

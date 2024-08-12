@@ -1,6 +1,6 @@
-import { Album, mapAlbumDB } from "../types";
+import { Album, mapAlbumDB } from "../../types";
 import { cache } from "react";
-import prisma from "../prisma";
+import prisma from "../../prisma";
 
 type GetAlbumsParams = {
   query?: string;

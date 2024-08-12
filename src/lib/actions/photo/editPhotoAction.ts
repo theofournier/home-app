@@ -1,8 +1,8 @@
 "use server";
 
 import { z } from "zod";
-import { updatePhoto } from "../services/queries/updatePhoto";
-import { auth } from "../auth/auth";
+import { updatePhoto } from "../../services/queries/photo/updatePhoto";
+import { auth } from "../../auth/auth";
 
 const EditPhotoSchema = z.object({
   id: z.string(),

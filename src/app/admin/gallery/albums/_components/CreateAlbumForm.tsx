@@ -3,7 +3,7 @@
 import { Input, Textarea } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { useFormState, useFormStatus } from "react-dom";
-import { createAlbumAction } from "@/lib/actions/createAlbumAction";
+import { createAlbumAction } from "@/lib/actions/album/createAlbumAction";
 
 const SaveButton = () => {
   const { pending } = useFormStatus();

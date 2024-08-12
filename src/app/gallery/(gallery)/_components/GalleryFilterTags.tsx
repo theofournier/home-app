@@ -1,4 +1,4 @@
-import { getTags } from "@/lib/services/queries/getTags";
+import { getTags } from "@/lib/services/queries/tag/getTags";
 import { IconTagFilled } from "@tabler/icons-react";
 import { GalleryFilter } from "./GalleryFilter";
 
