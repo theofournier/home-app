@@ -1,4 +1,3 @@
-import NextImage from "next/image";
 import NextLink from "next/link";
 
 import { getPhoto } from "@/lib/services/queries/photo/getPhoto";
@@ -10,6 +9,7 @@ import {
 } from "@tabler/icons-react";
 import { Metadata, ResolvingMetadata } from "next";
 import { pathForAlbum } from "@/config/path";
+import { CldImage } from "@/components/gallery/CldImage";
 
 type Props = {
   params: { id: string };
@@ -35,8 +35,6 @@ export default async function Photo({ params: { id } }: Props) {
     return notFound();
   }
 
-  const photoAspectRatio = photo.width / photo.height;
-
   return (
     <div className="container mb-4 mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
       <div className="col-span-1 md:col-span-3">
@@ -47,14 +45,14 @@ export default async function Photo({ params: { id } }: Props) {
             rel="noopener noreferrer"
             className="cursor-zoom-in"
           >
-            <NextImage
+            <CldImage
               alt={photo.title ?? photo.id}
-              src={photo.urlCompressed ?? photo.url}
+              src={photo.url}
               style={{
                 objectFit: "contain",
               }}
               height={600}
-              width={photoAspectRatio * 600}
+              width={1.5 * 600}
             />
           </NextLink>
         </div>

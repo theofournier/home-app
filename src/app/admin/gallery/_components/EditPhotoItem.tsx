@@ -1,6 +1,5 @@
 "use client";
 
-import NextImage from "next/image";
 import NextLink from "next/link";
 
 import { Album, Photo, Tag } from "@/lib/services/types";
@@ -10,8 +9,8 @@ import { pathForPhoto } from "@/config/path";
 import { useFormState, useFormStatus } from "react-dom";
 import { editPhotoAction } from "@/lib/actions/photo/editPhotoAction";
 import { Select, SelectItem } from "@nextui-org/select";
-import { CompressPhoto } from "./CompressPhoto";
 import { DeletePhoto } from "./DeletePhoto";
+import { CldImage } from "@/components/gallery/CldImage";
 
 type Props = {
   photo: Photo;
@@ -44,20 +43,16 @@ export const EditPhotoItem = ({ photo, tags, albums }: Props) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <NextImage
+            <CldImage
               alt={photo.title ?? photo.id}
-              src={photo.urlCompressed ?? photo.url}
+              src={photo.url}
               style={{ objectFit: "cover", aspectRatio: "1.5/1" }}
               width={200}
               height={200 / 1.5}
             />
           </NextLink>
           <Input name="url" label="URL" defaultValue={photo.url} />
-          <Input
-            name="urlCompressed"
-            label="URL Compressed"
-            defaultValue={photo.urlCompressed}
-          />
+          <Input name="assetId" label="Asset ID" defaultValue={photo.assetId} />
         </div>
         <div className="space-y-1">
           <Input name="title" label="Title" defaultValue={photo.title} />
@@ -133,12 +128,12 @@ export const EditPhotoItem = ({ photo, tags, albums }: Props) => {
           <Input
             name="width"
             label="width"
-            defaultValue={photo.width.toString()}
+            defaultValue={photo.width?.toString()}
           />
           <Input
             name="height"
             label="height"
-            defaultValue={photo.height.toString()}
+            defaultValue={photo.height?.toString()}
           />
         </div>
         <div className="space-y-1">
@@ -149,7 +144,6 @@ export const EditPhotoItem = ({ photo, tags, albums }: Props) => {
           {state.successMessage && (
             <p className="text-success">{state.successMessage}</p>
           )}
-          <CompressPhoto id={photo.id} url={photo.url} title={photo.title} />
           <DeletePhoto id={photo.id} />
         </div>
       </div>

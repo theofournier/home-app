@@ -3,25 +3,20 @@
 import { Button } from "@nextui-org/button";
 import NextImage from "next/image";
 import { ChangeEvent, useState } from "react";
-import { uploadPhoto } from "@/lib/utils/uploadPhoto";
-import { compressPhoto } from "@/lib/utils/compressPhoto";
+import { useFormState, useFormStatus } from "react-dom";
+import { uploadPhotosAction } from "@/lib/actions/photo/uploadPhotosAction";
 
-type StatusType = { success: boolean; reason?: string };
+const UploadButton = () => {
+  const { pending } = useFormStatus();
 
-type UploadStatus = {
-  photoName: string;
-  original?: StatusType;
-  compress?: StatusType;
-  database?: StatusType;
+  return (
+    <Button type="submit" isLoading={pending} color="primary">
+      Upload photos
+    </Button>
+  );
 };
 
-const UploadPhotoItem = ({
-  photoFile,
-  status,
-}: {
-  photoFile: File;
-  status?: StatusType;
-}) => {
+const UploadPhotoItem = ({ photoFile }: { photoFile: File }) => {
   return (
     <div className="relative">
       <NextImage
@@ -35,137 +30,49 @@ const UploadPhotoItem = ({
         width={400}
         height={400 / 1.5}
       />
-      {status?.success && (
-        <div className="absolute top-0 h-full w-full bg-success/30" />
-      )}
-      {status?.success === false && (
-        <div className="absolute top-0 h-full w-full bg-danger/30">
-          <p>{status?.reason}</p>
-        </div>
-      )}
     </div>
   );
 };
 
 export const UploadPhotoForm = () => {
-  const [status, setStatus] = useState<{
-    loading: boolean;
-    results: UploadStatus[];
-  }>({
-    loading: false,
-    results: [],
+  const [state, formAction] = useFormState(uploadPhotosAction, {
+    errorMessage: "",
+    successMessage: "",
   });
-  const [photoFiles, setPhotoFiles] = useState<
-    { original: File; compress?: File }[]
-  >([]);
+  const [photoFiles, setPhotoFiles] = useState<File[]>([]);
 
   const onChangePhotoFiles = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
-      const photos = Array.from(files).map<{ original: File; compress?: File }>(
-        (file) => ({ original: file })
-      );
-      for (const photo of photos) {
-        photo.compress = await compressPhoto(photo.original);
-      }
-      setPhotoFiles(photos);
+      setPhotoFiles(Array.from(files));
     }
-  };
-
-  const handleUploadPhotos = async () => {
-    if (photoFiles.length === 0) {
-      return;
-    }
-
-    setStatus({ loading: true, results: [] });
-
-    const results = await Promise.allSettled(
-      photoFiles.map(async (photoFile) => {
-        const result: UploadStatus = {
-          photoName: photoFile.original.name,
-        };
-        // Original
-        const originalResult = await uploadPhoto(photoFile.original);
-        result.original = {
-          success: originalResult.ok,
-          reason: originalResult.reason,
-        };
-
-        if (originalResult.ok) {
-          // Compress
-          const compressResult = await uploadPhoto(
-            photoFile.compress,
-            "compressed"
-          );
-          result.compress = {
-            success: compressResult.ok,
-            reason: compressResult.reason,
-          };
-          const photoResponse = await fetch("/api/photos", {
-            method: "POST",
-            body: JSON.stringify({
-              url: originalResult.url,
-              urlCompress: compressResult.url,
-            }),
-          });
-          result.database = {
-            success: photoResponse.ok,
-          };
-        }
-        return result;
-      })
-    );
-
-    setStatus({
-      loading: false,
-      results: results.map((res) => {
-        if (res.status === "rejected") {
-          return { success: false, photoName: res.reason };
-        }
-        return res.value;
-      }),
-    });
   };
 
   return (
-    <div>
+    <form action={formAction}>
       <div>
-        <input type="file" multiple onChange={onChangePhotoFiles} />
-        <Button
-          type="button"
-          color="primary"
-          isLoading={status.loading}
-          onPress={handleUploadPhotos}
-          isDisabled={photoFiles.length === 0}
-        >
-          Upload photos
-        </Button>
+        <input
+          name="photo"
+          type="file"
+          multiple
+          onChange={onChangePhotoFiles}
+        />
+        <UploadButton />
+        {state.errorMessage && (
+          <p className="text-danger">{state.errorMessage}</p>
+        )}
+        {state.successMessage && (
+          <p className="text-success">{state.successMessage}</p>
+        )}
       </div>
       <h3>Photos</h3>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
         {photoFiles.map((photoFile) => (
-          <div key={photoFile.original.name}>
-            <UploadPhotoItem
-              photoFile={photoFile.original}
-              status={
-                status.results.find(
-                  (res) => res.photoName === photoFile.original.name
-                )?.original
-              }
-            />
-            {photoFile.compress && (
-              <UploadPhotoItem
-                photoFile={photoFile.compress}
-                status={
-                  status.results.find(
-                    (res) => res.photoName === photoFile.compress!.name
-                  )?.compress
-                }
-              />
-            )}
+          <div key={photoFile.name}>
+            <UploadPhotoItem photoFile={photoFile} />
           </div>
         ))}
       </div>
-    </div>
+    </form>
   );
 };

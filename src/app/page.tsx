@@ -1,6 +1,6 @@
+import { CldImage } from "@/components/gallery/CldImage";
 import { pathForPhoto } from "@/config/path";
 import { getRandomPhoto } from "@/lib/services/queries/photo/getRandomPhoto";
-import NextImage from "next/image";
 import NextLink from "next/link";
 
 export default async function Home() {
@@ -13,11 +13,11 @@ export default async function Home() {
   return (
     <NextLink href={pathForPhoto(randomPhoto)}>
       <div className="relative h-full">
-        <NextImage
+        <CldImage
           fill
           sizes="100vw"
           alt={randomPhoto.title ?? randomPhoto.id}
-          src={randomPhoto.urlCompressed ?? randomPhoto.url}
+          src={randomPhoto.url}
           style={{
             objectFit: "cover",
           }}

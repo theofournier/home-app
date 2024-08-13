@@ -1,6 +1,5 @@
 "use client";
 
-import NextImage from "next/image";
 import NextLink from "next/link";
 
 import { Album } from "@/lib/services/types";
@@ -10,6 +9,7 @@ import { pathForAlbum } from "@/config/path";
 import { useFormState, useFormStatus } from "react-dom";
 import { DeleteAlbum } from "./DeleteAlbum";
 import { editAlbumAction } from "@/lib/actions/album/editAlbumAction";
+import { CldImage } from "@/components/gallery/CldImage";
 
 type Props = {
   album: Album;
@@ -40,7 +40,7 @@ export const EditAlbumItem = ({ album }: Props) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <NextImage
+            <CldImage
               alt={album.title ?? album.id}
               src={album.coverUrl ?? "/album-cover.png"}
               style={{ objectFit: "cover", aspectRatio: "1.5/1" }}

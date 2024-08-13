@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { auth } from "../../auth/auth";
 import { deletePhoto } from "../../services/queries/photo/deletePhoto";
-import { deletePhotoServer } from "../../services/vercelBlob";
+import { deletePhotoServer } from "../../services/cloudinary";
 
 const DeletePhotoSchema = z.object({
   id: z.string(),
@@ -28,9 +28,6 @@ export const deletePhotoAction = async (
     const deletedPhoto = await deletePhoto(id);
     if (deletedPhoto) {
       await deletePhotoServer(deletedPhoto.url);
-      if (deletedPhoto.url_compressed) {
-        await deletePhotoServer(deletedPhoto.url_compressed);
-      }
     }
   } catch (error) {
     console.log(error);

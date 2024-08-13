@@ -10,22 +10,22 @@ datasource db {
 }
 
 model photos {
-  id             String          @id @db.VarChar(255)
-  url            String
-  height         Int
-  width          Int
-  title          String?
-  description    String?
-  location       String?
-  date           DateTime?       @db.Timestamptz(6)
-  exposure       String?
-  focal_length   Int?
-  f_number       Int?
-  iso            Int?
-  created_at     DateTime        @default(now()) @db.Timestamptz(6)
-  url_compressed String?
-  photos_albums  photos_albums[]
-  photos_tags    photos_tags[]
+  id            String          @id @db.VarChar(255)
+  url           String
+  height        Int?
+  width         Int?
+  title         String?
+  description   String?
+  location      String?
+  date          DateTime?       @db.Timestamptz(6)
+  exposure      String?
+  focal_length  Int?
+  f_number      Int?
+  iso           Int?
+  created_at    DateTime        @default(now()) @db.Timestamptz(6)
+  asset_id      String?
+  photos_albums photos_albums[]
+  photos_tags   photos_tags[]
 }
 
 model photos_tags {

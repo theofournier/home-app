@@ -1,7 +1,7 @@
 import { Photo } from "@/lib/services/types";
 import NextLink from "next/link";
-import NextImage from "next/image";
 import { pathForPhoto } from "@/config/path";
+import { CldImage } from "./CldImage";
 
 type PhotoItemProps = {
   photo: Photo;
@@ -13,9 +13,9 @@ const PhotoItem = ({ photo }: PhotoItemProps) => {
       href={pathForPhoto(photo)}
       className="active:brightness-75 flex relative aspect-[1.5/1]"
     >
-      <NextImage
+      <CldImage
         alt={photo.title ?? photo.id}
-        src={photo.urlCompressed ?? photo.url}
+        src={photo.url}
         style={{ objectFit: "cover" }}
         width={400}
         height={400 / 1.5}

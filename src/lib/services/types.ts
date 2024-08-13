@@ -18,9 +18,9 @@ export type AlbumFullDB = albums & {
 export interface Photo {
   id: string;
   url: string;
-  urlCompressed?: string;
-  height: number;
-  width: number;
+  assetId?: string;
+  height?: number;
+  width?: number;
   title?: string;
   description?: string;
   location?: string;
@@ -57,9 +57,9 @@ export interface Album {
 export const mapPhotoDB = (photoDB: photos): Photo => ({
   id: photoDB.id,
   url: photoDB.url,
-  urlCompressed: photoDB.url_compressed ?? undefined,
-  height: photoDB.height,
-  width: photoDB.width,
+  assetId: photoDB.asset_id ?? undefined,
+  height: photoDB.height ?? undefined,
+  width: photoDB.width ?? undefined,
   title: photoDB.title ?? undefined,
   description: photoDB.description ?? undefined,
   location: photoDB.location ?? undefined,

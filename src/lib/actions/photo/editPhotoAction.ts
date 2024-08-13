@@ -7,7 +7,7 @@ import { auth } from "../../auth/auth";
 const EditPhotoSchema = z.object({
   id: z.string(),
   url: z.string(),
-  url_compressed: z.string().nullable(),
+  asset_id: z.string().nullable(),
   title: z.string().nullable(),
   description: z.string().nullable(),
   date: z.date().nullable(),
@@ -34,7 +34,7 @@ export const editPhotoAction = async (
     const { tags, albums, ...editPhotoFormData } = EditPhotoSchema.parse({
       id: formData.get("photoId"),
       url: formData.get("url"),
-      url_compressed: formData.get("urlCompressed") || null,
+      asset_id: formData.get("assetId") || null,
       title: formData.get("title") || null,
       description: formData.get("description") || null,
       date: formData.get("date")

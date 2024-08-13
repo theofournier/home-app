@@ -1,7 +1,7 @@
 import { Album } from "@/lib/services/types";
 import NextLink from "next/link";
-import NextImage from "next/image";
 import { pathForAlbum } from "@/config/path";
+import { CldImage } from "@/components/gallery/CldImage";
 
 type Props = {
   album: Album;
@@ -14,7 +14,7 @@ export const AlbumItem = ({ album }: Props) => {
         href={pathForAlbum(album)}
         className="active:brightness-75 relative flex justify-center aspect-[1.5/1]"
       >
-        <NextImage
+        <CldImage
           alt={album.title ?? album.id}
           src={album.coverUrl ?? "/album-cover.png"}
           style={{ objectFit: "cover" }}
