@@ -1,5 +1,6 @@
 import { mapPhotoFullDB, Photo } from "../../types";
 import { cache } from "react";
+import _ from "lodash";
 import prisma from "../../prisma";
 
 type GetPhotosParams = {
@@ -7,7 +8,19 @@ type GetPhotosParams = {
   tags?: string[];
   locations?: string[];
   sort?: string;
+  page?: number;
+  pageSize?: number;
 };
+
+type GetPhotosResponse = {
+  photos: Photo[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+  pageCount: number;
+};
+
+const PAGE_SIZE = 20;
 
 export const getPhotos = cache(
   async ({
@@ -15,50 +28,64 @@ export const getPhotos = cache(
     tags,
     locations,
     sort = "date",
-  }: GetPhotosParams): Promise<Photo[]> => {
+    page = 1,
+    pageSize = PAGE_SIZE,
+  }: GetPhotosParams): Promise<GetPhotosResponse> => {
     try {
-      const photosDB = await prisma.photos.findMany({
-        include: {
-          photos_tags: {
-            include: {
-              tags: true,
-            },
-          },
-          photos_albums: {
-            include: {
-              albums: true,
-            },
-          },
+      const where = {
+        title: {
+          search: query,
         },
-        where: {
-          title: {
-            search: query,
-          },
-          location: {
-            in: locations,
-          },
-          ...(tags && tags.length > 0
-            ? {
-                photos_tags: {
-                  some: {
-                    tag_value: {
-                      in: tags,
-                    },
+        location: {
+          in: locations,
+        },
+        ...(tags && tags.length > 0
+          ? {
+              photos_tags: {
+                some: {
+                  tag_value: {
+                    in: tags,
                   },
                 },
-              }
-            : undefined),
-        },
-        orderBy: [{ [sort]: "desc" }],
-      });
+              },
+            }
+          : undefined),
+      };
 
+      const [photosDB, totalCount] = await prisma.$transaction([
+        prisma.photos.findMany({
+          include: {
+            photos_tags: {
+              include: {
+                tags: true,
+              },
+            },
+            photos_albums: {
+              include: {
+                albums: true,
+              },
+            },
+          },
+          where,
+          orderBy: [{ [sort]: "desc" }],
+          skip: (page - 1) * pageSize,
+          take: pageSize,
+        }),
+        prisma.photos.count({ where }),
+      ]);
 
       const photos: Photo[] = photosDB.map(mapPhotoFullDB);
 
-      return photos;
+      return {
+        photos,
+        page,
+        pageSize,
+        totalCount,
+        pageCount: _.ceil(totalCount / pageSize),
+      };
     } catch (error) {
       console.log(`Error fetching photos: ${error}`);
-      return [];
+      return { photos: [], page, pageSize, totalCount: 0, pageCount: 0 };
     }
   }
 );

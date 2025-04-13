@@ -3,7 +3,6 @@ import { EditPhotoItem } from "./_components/EditPhotoItem";
 import { getTags } from "@/lib/services/queries/tag/getTags";
 import NextLink from "next/link";
 import {
-  PATH_ADMIN_GALLERY,
   PATH_ADMIN_GALLERY_ALBUMS,
   PATH_ADMIN_GALLERY_UPLOAD,
 } from "@/config/path";
@@ -11,13 +10,38 @@ import { Metadata } from "next";
 import { Button } from "@nextui-org/button";
 import { IconLibraryPhoto, IconUpload } from "@tabler/icons-react";
 import { getAlbums } from "@/lib/services/queries/album/getAlbums";
+import { GallerySearchInput } from "@/app/gallery/(gallery)/_components/GallerySearchInput";
+import { GalleryFilterTags } from "@/app/gallery/(gallery)/_components/GalleryFilterTags";
+import { GalleryFilterLocations } from "@/app/gallery/(gallery)/_components/GalleryFilterLocations";
+import { NextPageProps } from "@/lib/types";
+import { GalleryPagination } from "@/components/gallery/GalleryPagination";
+
+type Props = {
+  query?: string;
+  tags?: string;
+  locations?: string;
+  page?: string;
+};
 
 export const metadata: Metadata = {
   title: "Admin - Gallery",
 };
 
-export default async function AdminGallery() {
-  const photos = await getPhotos({ sort: "created_at" });
+export default async function AdminGallery({
+  searchParams,
+}: NextPageProps<Props>) {
+  const searchQuery = searchParams.query;
+  const filterTags = searchParams.tags?.split(",");
+  const filterLocations = searchParams.locations?.split(",");
+  const page = +(searchParams.page ?? 1);
+
+  const { photos, pageCount } = await getPhotos({
+    sort: "created_at",
+    query: searchQuery,
+    tags: filterTags,
+    locations: filterLocations,
+    page,
+  });
   const tags = await getTags();
   const albums = await getAlbums({});
 
@@ -40,6 +64,11 @@ export default async function AdminGallery() {
           Manage albums
         </Button>
       </div>
+      <div className="space-y-4">
+        <GallerySearchInput />
+        <GalleryFilterTags />
+        <GalleryFilterLocations />
+      </div>
       <div className="divide-y">
         {photos.map((photo) => (
           <EditPhotoItem
@@ -50,6 +79,7 @@ export default async function AdminGallery() {
           />
         ))}
       </div>
+      <GalleryPagination page={page} total={pageCount} />
     </div>
   );
 }
