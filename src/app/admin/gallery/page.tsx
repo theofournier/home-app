@@ -4,11 +4,12 @@ import { getTags } from "@/lib/services/queries/tag/getTags";
 import NextLink from "next/link";
 import {
   PATH_ADMIN_GALLERY_ALBUMS,
+  PATH_ADMIN_GALLERY_TAGS,
   PATH_ADMIN_GALLERY_UPLOAD,
 } from "@/config/path";
 import { Metadata } from "next";
 import { Button } from "@nextui-org/button";
-import { IconLibraryPhoto, IconUpload } from "@tabler/icons-react";
+import { IconLibraryPhoto, IconTag, IconUpload } from "@tabler/icons-react";
 import { getAlbums } from "@/lib/services/queries/album/getAlbums";
 import { GallerySearchInput } from "@/app/gallery/(gallery)/_components/GallerySearchInput";
 import { GalleryFilterTags } from "@/app/gallery/(gallery)/_components/GalleryFilterTags";
@@ -62,6 +63,13 @@ export default async function AdminGallery({
           href={PATH_ADMIN_GALLERY_ALBUMS}
         >
           Manage albums
+        </Button>
+        <Button
+          startContent={<IconTag />}
+          as={NextLink}
+          href={PATH_ADMIN_GALLERY_TAGS}
+        >
+          Manage tags
         </Button>
       </div>
       <div className="space-y-4">

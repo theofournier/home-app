@@ -20,7 +20,7 @@ type GetPhotosResponse = {
   pageCount: number;
 };
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 30;
 
 export const getPhotos = cache(
   async ({
